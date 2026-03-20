@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Vorschau — Eine Kulinarische Reise</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+
+  body {
+    background: #0f0d0a;
+    font-family: 'Cinzel', serif;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 56px;
+    background: rgba(15,13,10,0.97);
+    border-bottom: 1px solid rgba(200,132,58,0.2);
+    z-index: 10;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #c8843a;
+    text-decoration: none;
+    border: 1px solid rgba(200,132,58,0.35);
+    padding: 7px 16px;
+    transition: all 0.2s;
+    background: none;
+    cursor: pointer;
+  }
+  .back-btn:hover {
+    background: rgba(200,132,58,0.1);
+    border-color: rgba(200,132,58,0.6);
+    color: #d4a85c;
+  }
+  .back-btn .arrow { font-size: 0.75rem; }
+
+  .topbar-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.0rem;
+    font-weight: 300;
+    color: #f0e8d8;
+    letter-spacing: 0.06em;
+    text-align: center;
+    flex: 1;
+    padding: 0 12px;
+  }
+
+  .topbar-lang {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.18em;
+    color: rgba(200,132,58,0.5);
+    text-transform: uppercase;
+    min-width: 80px;
+    text-align: right;
+  }
+
+  /* ── PDF VIEWER ── */
+  .pdf-container {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    background: #1c1914;
+  }
+
+  /* Native PDF embed — works on desktop */
+  .pdf-embed {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  /* Mobile fallback — shown only on small screens */
+  .mobile-fallback {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 32px 24px;
+    text-align: center;
+    gap: 20px;
+  }
+  .mobile-fallback .icon {
+    font-size: 3rem;
+    opacity: 0.4;
+    color: #c8843a;
+    line-height: 1;
+  }
+  .mobile-fallback p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: #cfc0a2;
+    line-height: 1.7;
+    max-width: 300px;
+  }
+  .mobile-fallback .open-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #0f0d0a;
+    background: #c8843a;
+    padding: 14px 28px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .mobile-fallback .open-btn:hover { background: #d4a85c; }
+  .mobile-fallback .note {
+    font-family: 'Cinzel', serif;
+    font-size: 0.52rem;
+    letter-spacing: 0.14em;
+    color: rgba(200,132,58,0.4);
+    text-transform: uppercase;
+  }
+
+  /* On touch/mobile devices, hide embed and show fallback */
+  @media (max-width: 768px) and (pointer: coarse) {
+    .pdf-embed { display: none; }
+    .mobile-fallback { display: flex; }
+  }
+
+  /* ── BOTTOM BAR ── */
+  .bottombar {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 24px;
+    height: 44px;
+    background: rgba(15,13,10,0.97);
+    border-top: 1px solid rgba(200,132,58,0.1);
+  }
+  .bottombar span {
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(200,132,58,0.35);
+  }
+  .bottombar .dot { color: rgba(200,132,58,0.2); }
+  .buy-link {
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #c8843a;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(200,132,58,0.3);
+    padding-bottom: 1px;
+    transition: color 0.2s;
+  }
+  .buy-link:hover { color: #d4a85c; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <a class="back-btn" href="https://joedcosta.com">
+    <span class="arrow">←</span> joedcosta.com
+  </a>
+  <div class="topbar-title">Eine Kulinarische Reise</div>
+  <div class="topbar-lang">Vorschau · DE</div>
+</div>
+
+<!-- PDF VIEWER -->
+<div class="pdf-container">
+
+  <!-- Desktop: native browser PDF embed -->
+  <iframe
+    class="pdf-embed"
+    src="Preview.pdf#toolbar=1&navpanes=0&scrollbar=1&view=FitH"
+    title="Vorschau — Eine Kulinarische Reise"
+    allowfullscreen>
+  </iframe>
+
+  <!-- Mobile: open-in-viewer fallback -->
+  <div class="mobile-fallback">
+    <div class="icon">📖</div>
+    <p>Öffnen Sie die Vorschau als PDF — alle 23 Seiten, perfekt auf Ihrem Gerät.</p>
+    <a class="open-btn" href="Preview.pdf" target="_blank">
+      Vorschau öffnen ↗
+    </a>
+    <div class="note">Öffnet als PDF in Ihrem Browser</div>
+  </div>
+
+</div>
+
+<!-- BOTTOM BAR -->
+<div class="bottombar">
+  <span>© 2026 J. D'Costa Andrade</span>
+  <span class="dot">·</span>
+  <span>1. Auflage · First Edition</span>
+  <span class="dot">·</span>
+  <a class="buy-link" href="https://joedcosta.com/#buy">Jetzt bestellen</a>
+</div>
+
+</body>
+</html>

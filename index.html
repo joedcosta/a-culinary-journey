@@ -302,28 +302,68 @@
       border: 1px solid rgba(200,132,58,0.28); padding: 5px 11px;
     }
 
-    /* ── PREVIEW ── */
-    .preview {
-      background: var(--ink-soft); padding: 100px 120px;
-      border-top: 1px solid rgba(200,132,58,0.1);
-    }
+    /* ── PREVIEW CARD ── */
+    .preview { background: var(--ink-soft); padding: 100px 120px; border-top: 1px solid rgba(200,132,58,0.1); }
     .preview-header { text-align: center; margin-bottom: 52px; }
-    .pdf-embed-wrap {
-      position: relative; width: 100%; max-width: 860px; margin: 0 auto;
-      background: #111; border: 1px solid rgba(200,132,58,0.15);
+
+    .preview-card {
+      max-width: 860px; margin: 0 auto;
+      border: 1px solid rgba(200,132,58,0.18);
+      background: var(--ink-mid);
     }
-    .pdf-embed-wrap iframe { width: 100%; height: 640px; border: none; display: block; }
-    .pdf-placeholder {
-      width: 100%; height: 640px;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 20px; background: var(--ink-mid); border: 1px dashed rgba(200,132,58,0.3);
+    .preview-card-inner {
+      display: grid; grid-template-columns: 280px 1fr;
+      gap: 0; align-items: stretch;
     }
-    .pdf-placeholder p {
-      font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--text-muted); text-align: center;
-      max-width: 360px; line-height: 1.8;
+
+    /* stacked pages mock */
+    .preview-page-stack {
+      position: relative; min-height: 360px;
+      display: flex; align-items: stretch;
     }
-    .pdf-placeholder svg { color: var(--saffron); opacity: 0.4; }
+    .preview-page {
+      position: absolute; top: 0; bottom: 0; left: 0; right: 0;
+      background: #f5edd8;
+    }
+    .preview-page.p3 { transform: rotate(-3deg) translateX(-8px); box-shadow: 4px 4px 20px rgba(0,0,0,0.4); }
+    .preview-page.p2 { transform: rotate(-1.5deg) translateX(-4px); box-shadow: 4px 4px 20px rgba(0,0,0,0.35); }
+    .preview-page.p1 {
+      transform: none; box-shadow: 6px 8px 32px rgba(0,0,0,0.6);
+      overflow: hidden;
+    }
+    .preview-page.p1 img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+
+    .preview-card-text {
+      padding: 48px 44px; display: flex; flex-direction: column; justify-content: center;
+      border-left: 1px solid rgba(200,132,58,0.12);
+    }
+    .preview-card-kicker {
+      font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.24em;
+      text-transform: uppercase; color: var(--saffron); margin-bottom: 12px;
+    }
+    .preview-card-title {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 300;
+      font-style: italic; color: var(--parchment); line-height: 1.2; margin-bottom: 18px;
+    }
+    .preview-card-desc {
+      font-size: 0.95rem; line-height: 1.8; color: var(--warm-sand); margin-bottom: 32px;
+    }
+    .preview-open-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--ink);
+      background: var(--saffron); padding: 13px 28px;
+      font-weight: 600; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      align-self: flex-start;
+    }
+    .preview-open-btn:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    @media (max-width: 640px) {
+      .preview-card-inner { grid-template-columns: 1fr; }
+      .preview-page-stack { min-height: 220px; }
+      .preview-card-text { padding: 28px 20px; border-left: none; border-top: 1px solid rgba(200,132,58,0.12); }
+    }
 
     /* ── EDITIONS ── */
     .editions {
@@ -578,7 +618,7 @@
   const CONFIG = {
     BOOK_COVER_URL:   "https://res.cloudinary.com/djzg1ulup/image/upload/v1771739932/Front__Cover_jgrhgf.jpg",
     AUTHOR_PHOTO_URL: "https://res.cloudinary.com/djzg1ulup/image/upload/v1771744082/The_Author_portrait_2_i5roac.jpg",
-    PDF_PREVIEW_URL:  "flipbook-googlesite.html",
+    PDF_PREVIEW_URL:  "",
     LINKS: {
       tolino_ebook:  "#",
       d2d_ebook:     "#",
@@ -597,12 +637,12 @@
 <nav>
   <div class="nav-title">Eine Kulinarische Reise</div>
   <ul class="nav-links">
-    <li><a href="#about"     onclick="navScrollTo('about');     return false;">Das Buch</a></li>
-    <li><a href="#preview"   onclick="navScrollTo('preview');   return false;">Vorschau</a></li>
-    <li><a href="#editions"  onclick="navScrollTo('editions');  return false;">Ausgaben</a></li>
-    <li><a href="#languages" onclick="navScrollTo('languages'); return false;">Sprachen</a></li>
-    <li><a href="#author"    onclick="navScrollTo('author');    return false;">Autor</a></li>
-    <li><a href="#buy"       onclick="navScrollTo('buy');       return false;">Bestellen</a></li>
+    <li><a href="#about"     id="nav-about"     onclick="navScrollTo('about');     return false;">Das Buch</a></li>
+    <li><a href="#preview"   id="nav-preview"   onclick="navScrollTo('preview');   return false;">Vorschau</a></li>
+    <li><a href="#editions"  id="nav-editions"  onclick="navScrollTo('editions');  return false;">Ausgaben</a></li>
+    <li><a href="#languages" id="nav-languages" onclick="navScrollTo('languages'); return false;">Sprachen</a></li>
+    <li><a href="#author"    id="nav-author"    onclick="navScrollTo('author');    return false;">Autor</a></li>
+    <li><a href="#buy"       id="nav-buy"       onclick="navScrollTo('buy');       return false;">Bestellen</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:10px;">
     <div class="lang-switcher">
@@ -621,12 +661,12 @@
 <!-- MOBILE DRAWER — rendered but hidden until .is-open -->
 <div class="mobile-drawer" id="mobile-drawer">
   <ul>
-    <li><a href="#about"     onclick="navScrollTo('about');     return false;">Das Buch</a></li>
-    <li><a href="#preview"   onclick="navScrollTo('preview');   return false;">Vorschau</a></li>
-    <li><a href="#editions"  onclick="navScrollTo('editions');  return false;">Ausgaben</a></li>
-    <li><a href="#languages" onclick="navScrollTo('languages'); return false;">Sprachen</a></li>
-    <li><a href="#author"    onclick="navScrollTo('author');    return false;">Autor</a></li>
-    <li><a href="#buy"       onclick="navScrollTo('buy');       return false;">Bestellen</a></li>
+    <li><a href="#about"     id="mob-about"     onclick="navScrollTo('about');     return false;">Das Buch</a></li>
+    <li><a href="#preview"   id="mob-preview"   onclick="navScrollTo('preview');   return false;">Vorschau</a></li>
+    <li><a href="#editions"  id="mob-editions"  onclick="navScrollTo('editions');  return false;">Ausgaben</a></li>
+    <li><a href="#languages" id="mob-languages" onclick="navScrollTo('languages'); return false;">Sprachen</a></li>
+    <li><a href="#author"    id="mob-author"    onclick="navScrollTo('author');    return false;">Autor</a></li>
+    <li><a href="#buy"       id="mob-buy"       onclick="navScrollTo('buy');       return false;">Bestellen</a></li>
   </ul>
 </div>
 <div class="drawer-overlay" id="drawer-overlay"></div>
@@ -651,7 +691,7 @@
     </p>
     <div class="hero-actions">
       <a id="btn-order" class="btn-primary" href="">Jetzt bestellen</a>
-      <a id="btn-preview" class="btn-outline" href="#preview" onclick="navScrollTo('preview'); return false;">Vorschau lesen</a>
+      <a id="btn-preview" class="btn-outline" href="preview-de.html" target="_blank">Vorschau lesen</a>
     </div>
   </div>
   <div class="scroll-hint">Scroll</div>
@@ -702,8 +742,24 @@
     <span class="section-kicker" id="prev-kicker">Einblick ins Buch</span>
     <h2 class="section-heading" id="prev-heading">Lesen Sie eine <em>Vorschau</em></h2>
   </div>
-  <div class="pdf-embed-wrap" id="pdf-wrap">
-    <!-- Filled by JS based on CONFIG.PDF_PREVIEW_URL -->
+  <div class="preview-card" id="pdf-wrap">
+    <div class="preview-card-inner">
+      <div class="preview-page-stack">
+        <div class="preview-page p3"></div>
+        <div class="preview-page p2"></div>
+        <div class="preview-page p1">
+          <img src="https://res.cloudinary.com/djzg1ulup/image/upload/v1771739932/Front__Cover_jgrhgf.jpg" alt="Cover"/>
+        </div>
+      </div>
+      <div class="preview-card-text">
+        <div class="preview-card-kicker" id="prev-card-kicker">Buchvorschau</div>
+        <div class="preview-card-title" id="prev-card-title">23 Seiten — kostenlos lesen</div>
+        <p class="preview-card-desc" id="prev-card-desc">Cover, Inhaltsverzeichnis, Einführung, zwei vollständige Kapitel und mehr — als PDF in Ihrem Browser.</p>
+        <a class="preview-open-btn" id="prev-open-btn" href="preview-de.html" target="_blank">
+          Vorschau öffnen ↗
+        </a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1036,6 +1092,10 @@ document.querySelectorAll('.reveal, .reveal-l, .reveal-r').forEach(function(el) 
 // ============================================================
 var T = {
   de: {
+    'nav-about': 'Das Buch', 'nav-preview': 'Vorschau', 'nav-editions': 'Ausgaben',
+    'nav-languages': 'Sprachen', 'nav-author': 'Autor', 'nav-buy': 'Bestellen',
+    'mob-about': 'Das Buch', 'mob-preview': 'Vorschau', 'mob-editions': 'Ausgaben',
+    'mob-languages': 'Sprachen', 'mob-author': 'Autor', 'mob-buy': 'Bestellen',
     'hero-eyebrow': 'Eine Kulinarische Reise · 1. Auflage · First Edition · 2026',
     'hero-l1': 'Eine <em>Kulinarische Reise</em>',
     'hero-l2': 'Geschichten &amp; Erzählungen',
@@ -1047,7 +1107,7 @@ var T = {
     'about-heading': 'Wo <em>Zutaten</em> zu<br>Geschichten werden',
     'about-p1': '<em>Eine Kulinarische Reise</em> ist mehr als ein Kochbuch — es ist eine Sammlung von Erzählungen über die Momente, die sich um Essen ranken. Über Großmütter mit mehlbestäubten Händen, über Märkte in fremden Städten.',
     'about-p2': 'Die Basis aller Gerichte ist nie nur das Rezept. Es ist das Gedächtnis, die Geste, der Geruch von Gewürzen, der eine ganze Kindheit zurückbringt.',
-    'prev-kicker': 'Einblick ins Buch', 'prev-heading': 'Lesen Sie eine <em>Vorschau</em>',
+    'prev-kicker': 'Einblick ins Buch', 'prev-heading': 'Lesen Sie eine <em>Vorschau</em>', 'prev-card-kicker': 'Buchvorschau', 'prev-card-title': '23 Seiten — kostenlos lesen', 'prev-card-desc': 'Cover, Inhaltsverzeichnis, Einführung, zwei vollständige Kapitel und mehr — als PDF in Ihrem Browser.', 'prev-open-btn': 'Vorschau öffnen ↗',
     'ed-kicker': 'Verfügbar als', 'ed-heading': 'Wählen Sie Ihre <em>Ausgabe</em>',
     'eb-badge': 'Jetzt verfügbar', 'pr-badge': 'Jetzt verfügbar', 'au-badge': 'Pre-Order',
     'ed-ebook-type': 'E-Book', 'ed-ebook-title': 'Digitale Ausgabe', 'ed-ebook-desc': 'Sofortiger Zugriff auf allen Geräten. EPUB-Format, kompatibel mit allen Readern.',
@@ -1066,6 +1126,10 @@ var T = {
     'pdf-placeholder-text': 'PDF-Vorschau wird hier angezeigt.<br>Tragen Sie Ihre URL in CONFIG.PDF_PREVIEW_URL ein.',
   },
   en: {
+    'nav-about': 'The Book', 'nav-preview': 'Preview', 'nav-editions': 'Editions',
+    'nav-languages': 'Languages', 'nav-author': 'Author', 'nav-buy': 'Order',
+    'mob-about': 'The Book', 'mob-preview': 'Preview', 'mob-editions': 'Editions',
+    'mob-languages': 'Languages', 'mob-author': 'Author', 'mob-buy': 'Order',
     'hero-eyebrow': 'Eine Kulinarische Reise · 1st Edition · Translation · 2026',
     'hero-l1': 'A <em>Culinary Journey</em>',
     'hero-l2': 'Stories &amp; Tales',
@@ -1077,7 +1141,7 @@ var T = {
     'about-heading': 'Where <em>Ingredients</em><br>become Stories',
     'about-p1': '<em>A Culinary Journey</em> is more than a cookbook — it is a collection of stories about the moments that revolve around food. About grandmothers with flour-dusted hands, markets in foreign cities.',
     'about-p2': 'The foundation of every dish is never just the recipe. It is memory, gesture, the scent of spices that brings back an entire childhood.',
-    'prev-kicker': 'Inside the Book', 'prev-heading': 'Read a <em>Preview</em>',
+    'prev-kicker': 'Inside the Book', 'prev-heading': 'Read a <em>Preview</em>', 'prev-card-kicker': 'Book Preview', 'prev-card-title': '23 pages — read for free', 'prev-card-desc': 'Cover, table of contents, introduction, two full chapters and more — as PDF in your browser.', 'prev-open-btn': 'Open Preview ↗',
     'ed-kicker': 'Available as', 'ed-heading': 'Choose Your <em>Edition</em>',
     'eb-badge': 'Available now', 'pr-badge': 'Available now', 'au-badge': 'Pre-Order',
     'ed-ebook-type': 'E-Book', 'ed-ebook-title': 'Digital Edition', 'ed-ebook-desc': 'Instant access on all devices. EPUB format, compatible with all readers.',
@@ -1096,6 +1160,10 @@ var T = {
     'pdf-placeholder-text': 'PDF preview will appear here.<br>Enter your URL in CONFIG.PDF_PREVIEW_URL.',
   },
   es: {
+    'nav-about': 'El Libro', 'nav-preview': 'Vista Previa', 'nav-editions': 'Ediciones',
+    'nav-languages': 'Idiomas', 'nav-author': 'Autor', 'nav-buy': 'Pedir',
+    'mob-about': 'El Libro', 'mob-preview': 'Vista Previa', 'mob-editions': 'Ediciones',
+    'mob-languages': 'Idiomas', 'mob-author': 'Autor', 'mob-buy': 'Pedir',
     'hero-eyebrow': 'Eine Kulinarische Reise · 1ª Edición · Traducción · 2026',
     'hero-l1': 'Un <em>Viaje Culinario</em>',
     'hero-l2': 'Historias y Relatos',
@@ -1107,7 +1175,7 @@ var T = {
     'about-heading': 'Donde los <em>Ingredientes</em><br>se convierten en Historias',
     'about-p1': '<em>Un Viaje Culinario</em> es más que un libro de cocina — es una colección de historias sobre los momentos que giran en torno a la comida. Sobre abuelas con manos enharinadas, mercados en ciudades lejanas.',
     'about-p2': 'La base de todos los platos nunca es solo la receta. Es la memoria, el gesto, el aroma de las especias que devuelve toda una infancia.',
-    'prev-kicker': 'Vista Previa', 'prev-heading': 'Lee una <em>Muestra</em>',
+    'prev-kicker': 'Vista Previa', 'prev-heading': 'Lee una <em>Muestra</em>', 'prev-card-kicker': 'Vista Previa', 'prev-card-title': '23 páginas — leer gratis', 'prev-card-desc': 'Portada, índice, introducción, dos capítulos completos y más — como PDF en tu navegador.', 'prev-open-btn': 'Abrir Vista Previa ↗',
     'ed-kicker': 'Disponible como', 'ed-heading': 'Elige tu <em>Edición</em>',
     'eb-badge': 'Disponible ahora', 'pr-badge': 'Disponible ahora', 'au-badge': 'Pre-Orden',
     'ed-ebook-type': 'E-Book', 'ed-ebook-title': 'Edición Digital', 'ed-ebook-desc': 'Acceso inmediato en todos los dispositivos. Formato EPUB.',
@@ -1126,6 +1194,10 @@ var T = {
     'pdf-placeholder-text': 'La vista previa en PDF aparecerá aquí.<br>Introduce tu URL en CONFIG.PDF_PREVIEW_URL.',
   },
   pt: {
+    'nav-about': 'O Livro', 'nav-preview': 'Amostra', 'nav-editions': 'Edições',
+    'nav-languages': 'Idiomas', 'nav-author': 'Autor', 'nav-buy': 'Encomendar',
+    'mob-about': 'O Livro', 'mob-preview': 'Amostra', 'mob-editions': 'Edições',
+    'mob-languages': 'Idiomas', 'mob-author': 'Autor', 'mob-buy': 'Encomendar',
     'hero-eyebrow': 'Eine Kulinarische Reise · 1ª Edição · Tradução · 2026',
     'hero-l1': 'Uma <em>Jornada Culinária</em>',
     'hero-l2': 'Histórias e Narrativas',
@@ -1137,7 +1209,7 @@ var T = {
     'about-heading': 'Onde os <em>Ingredientes</em><br>se tornam Histórias',
     'about-p1': '<em>Uma Jornada Culinária</em> é mais do que um livro de culinária — é uma coleção de histórias sobre os momentos que giram em torno da comida. Sobre avós com mãos enfarinhadas, mercados em cidades distantes.',
     'about-p2': 'A base de todos os pratos nunca é só a receita. É a memória, o gesto, o cheiro das especiarias que traz de volta uma infância inteira.',
-    'prev-kicker': 'Dentro do Livro', 'prev-heading': 'Leia uma <em>Amostra</em>',
+    'prev-kicker': 'Dentro do Livro', 'prev-heading': 'Leia uma <em>Amostra</em>', 'prev-card-kicker': 'Amostra do Livro', 'prev-card-title': '23 páginas — ler gratuitamente', 'prev-card-desc': 'Capa, índice, introdução, dois capítulos completos e mais — como PDF no seu browser.', 'prev-open-btn': 'Abrir Amostra ↗',
     'ed-kicker': 'Disponível como', 'ed-heading': 'Escolha a sua <em>Edição</em>',
     'eb-badge': 'Disponível agora', 'pr-badge': 'Disponível agora', 'au-badge': 'Pré-encomenda',
     'ed-ebook-type': 'E-Book', 'ed-ebook-title': 'Edição Digital', 'ed-ebook-desc': 'Acesso imediato em todos os dispositivos. Formato EPUB.',

@@ -139,8 +139,14 @@
     text-transform: uppercase;
   }
 
-  /* On touch/mobile devices, hide embed and show fallback */
-  @media (max-width: 768px) and (pointer: coarse) {
+  /* prevent right-click save on the container */
+  .pdf-container { -webkit-user-select: none; user-select: none; }
+
+  /* overlay to block right-click directly on iframe */
+  .pdf-shield {
+    position: absolute; inset: 0; z-index: 2;
+    pointer-events: none; /* allows scrolling/clicking through */
+  }
     .pdf-embed { display: none; }
     .mobile-fallback { display: flex; }
   }
@@ -193,10 +199,10 @@
 <!-- PDF VIEWER -->
 <div class="pdf-container">
 
-  <!-- Desktop: native browser PDF embed -->
+  <!-- Desktop: native browser PDF embed — 2-page view, no download -->
   <iframe
     class="pdf-embed"
-    src="Preview.pdf#toolbar=1&navpanes=0&scrollbar=1&view=FitH"
+    src="Preview.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH&pagemode=none"
     title="Vorschau — Eine Kulinarische Reise"
     allowfullscreen>
   </iframe>
@@ -222,5 +228,13 @@
   <a class="buy-link" href="https://joedcosta.com/#buy">Jetzt bestellen</a>
 </div>
 
+<script>
+  document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'p' || e.key === 'u')) {
+      e.preventDefault();
+    }
+  });
+</script>
 </body>
 </html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{width:1200px;height:630px;overflow:hidden;background:#0f0d0a;font-family:Georgia,serif;}
+.wrap{position:relative;width:1200px;height:630px;}
+.photo{position:absolute;left:0;top:0;width:620px;height:630px;overflow:hidden;}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:sepia(30%) contrast(0.9);}
+.fade-right{position:absolute;left:0;top:0;width:620px;height:630px;background:linear-gradient(to right,transparent 40%,#0f0d0a 100%);}
+.fade-top{position:absolute;left:0;top:0;width:620px;height:200px;background:linear-gradient(to bottom,rgba(15,13,10,0.5),transparent);}
+.fade-bottom{position:absolute;left:0;bottom:0;width:620px;height:200px;background:linear-gradient(to top,rgba(15,13,10,0.6),transparent);}
+.panel{position:absolute;right:0;top:0;width:620px;height:630px;display:flex;flex-direction:column;justify-content:center;padding:0 60px 0 50px;}
+.rule-v{position:absolute;left:580px;top:60px;width:1px;height:510px;background:rgba(200,132,58,0.2);}
+.author{font-size:16px;letter-spacing:5px;color:#c8843a;margin-bottom:4px;text-transform:uppercase;}
+.subtitle-it{font-size:18px;font-style:italic;color:#d4a85c;margin-bottom:22px;letter-spacing:1px;}
+.rule-h{width:460px;height:1px;background:linear-gradient(to right,#c8843a,rgba(200,132,58,0.1));margin-bottom:28px;}
+.t1{font-size:76px;font-weight:bold;color:#ffffff;line-height:0.95;letter-spacing:-1px;}
+.t2{font-size:54px;font-weight:bold;color:#ffffff;line-height:0.95;letter-spacing:-1px;}
+.t3{font-size:76px;font-weight:bold;color:#ffffff;line-height:0.95;letter-spacing:-1px;margin-bottom:28px;}
+.rule-h2{width:460px;height:1.5px;background:linear-gradient(to right,#c8843a,rgba(200,132,58,0.1));margin-bottom:28px;}
+.badge{display:inline-block;border:1px solid rgba(200,132,58,0.45);padding:7px 22px;margin-bottom:32px;}
+.badge-text{font-size:11px;letter-spacing:4px;color:#c8843a;text-transform:uppercase;}
+.domain{font-size:14px;letter-spacing:3px;color:#7a6e60;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="photo">
+    <img src="https://res.cloudinary.com/djzg1ulup/image/upload/v1771739932/Front__Cover_jgrhgf.jpg"/>
+  </div>
+  <div class="fade-right"></div>
+  <div class="fade-top"></div>
+  <div class="fade-bottom"></div>
+  <div class="rule-v"></div>
+  <div class="panel">
+    <div class="author">J. D'Costa Andrade</div>
+    <div class="subtitle-it">A Culinary Journey</div>
+    <div class="rule-h"></div>
+    <div class="t1">EINE</div>
+    <div class="t2">KULINARISCHE</div>
+    <div class="t3">REISE</div>
+    <div class="rule-h2"></div>
+    <div class="badge"><div class="badge-text">1. Auflage · First Edition · 2026</div></div>
+    <div class="domain">joedcosta.com</div>
+  </div>
+</div>
+</body>
+</html>

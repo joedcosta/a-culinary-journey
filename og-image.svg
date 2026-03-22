@@ -1,81 +1,88 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 630" width="1200" height="630">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 630" width="1200" height="630" shape-rendering="crispEdges">
   <defs>
-    <!-- sepia photo overlay gradient — left half shows photo, right half fades to dark -->
-    <linearGradient id="fadeRight" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="45%" stop-color="#0f0d0a" stop-opacity="0"/>
-      <stop offset="78%" stop-color="#0f0d0a" stop-opacity="0.88"/>
+    <linearGradient id="fadeR" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="35%" stop-color="#0f0d0a" stop-opacity="0"/>
+      <stop offset="75%" stop-color="#0f0d0a" stop-opacity="0.92"/>
       <stop offset="100%" stop-color="#0f0d0a" stop-opacity="1"/>
     </linearGradient>
-    <linearGradient id="fadeTop" x1="0%" y1="0%" x2="0%" y2="100%">
+    <linearGradient id="fadeT" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#0f0d0a" stop-opacity="0.55"/>
-      <stop offset="30%" stop-color="#0f0d0a" stop-opacity="0"/>
+      <stop offset="35%" stop-color="#0f0d0a" stop-opacity="0"/>
     </linearGradient>
-    <linearGradient id="fadeBottom" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="60%" stop-color="#0f0d0a" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#0f0d0a" stop-opacity="0.75"/>
+    <linearGradient id="fadeB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="65%" stop-color="#0f0d0a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0f0d0a" stop-opacity="0.7"/>
     </linearGradient>
-    <linearGradient id="goldLine" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#c8843a" stop-opacity="0"/>
-      <stop offset="20%" stop-color="#c8843a" stop-opacity="0.8"/>
-      <stop offset="80%" stop-color="#c8843a" stop-opacity="0.8"/>
+    <linearGradient id="gr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c8843a" stop-opacity="0.9"/>
+      <stop offset="70%" stop-color="#c8843a" stop-opacity="0.4"/>
       <stop offset="100%" stop-color="#c8843a" stop-opacity="0"/>
     </linearGradient>
+    <clipPath id="photoClip">
+      <rect x="0" y="0" width="640" height="630"/>
+    </clipPath>
   </defs>
 
-  <!-- ── BACKGROUND ── -->
+  <!-- full dark background -->
   <rect width="1200" height="630" fill="#0f0d0a"/>
 
-  <!-- ── BOOK COVER IMAGE (left 55%) ── -->
-  <image href="https://res.cloudinary.com/djzg1ulup/image/upload/v1771739932/Front__Cover_jgrhgf.jpg"
-         x="0" y="0" width="660" height="630"
-         preserveAspectRatio="xMidYMid slice"/>
+  <!-- book cover photo — left half -->
+  <image clip-path="url(#photoClip)"
+    href="https://res.cloudinary.com/djzg1ulup/image/upload/v1771739932/Front__Cover_jgrhgf.jpg"
+    x="0" y="0" width="640" height="630"
+    preserveAspectRatio="xMidYMid slice"/>
 
-  <!-- overlay gradients over photo -->
-  <rect x="0" y="0" width="660" height="630" fill="url(#fadeRight)"/>
-  <rect x="0" y="0" width="660" height="630" fill="url(#fadeTop)"/>
-  <rect x="0" y="0" width="660" height="630" fill="url(#fadeBottom)"/>
+  <!-- overlay fades -->
+  <rect x="0" y="0" width="640" height="630" fill="url(#fadeR)"/>
+  <rect x="0" y="0" width="640" height="630" fill="url(#fadeT)"/>
+  <rect x="0" y="0" width="640" height="630" fill="url(#fadeB)"/>
 
-  <!-- ── RIGHT TEXT PANEL ── -->
-  <!-- subtle vertical gold rule -->
-  <rect x="620" y="60" width="1" height="510" fill="#c8843a" opacity="0.25"/>
+  <!-- subtle vertical separator -->
+  <rect x="598" y="55" width="1" height="520" fill="#c8843a" opacity="0.18"/>
 
-  <!-- Author name -->
-  <text x="660" y="118" font-family="Georgia,serif" font-size="19"
-        fill="#c8843a" letter-spacing="4" opacity="0.95">J. D'COSTA ANDRADE</text>
+  <!-- ── RIGHT PANEL TEXT ── -->
 
-  <!-- Italic subtitle above main -->
-  <text x="660" y="154" font-family="Georgia,serif" font-size="18"
-        font-style="italic" fill="#d4a85c" letter-spacing="1" opacity="0.85">A Culinary Journey</text>
+  <!-- Author -->
+  <text x="640" y="130"
+    font-family="Georgia,serif" font-size="17"
+    fill="#c8843a" letter-spacing="4">J. D'COSTA ANDRADE</text>
 
-  <!-- Gold rule -->
-  <rect x="660" y="170" width="480" height="1" fill="url(#goldLine)"/>
+  <!-- Italic A Culinary Journey -->
+  <text x="640" y="162"
+    font-family="Georgia,serif" font-size="20"
+    font-style="italic" fill="#d4a85c" letter-spacing="1">A Culinary Journey</text>
 
-  <!-- Main Title -->
-  <text x="660" y="248" font-family="Georgia,serif" font-size="88"
-        font-weight="bold" fill="#ffffff" letter-spacing="-1">EINE</text>
-  <text x="660" y="342" font-family="Georgia,serif" font-size="64"
-        font-weight="bold" fill="#ffffff" letter-spacing="-1">KULINARISCHE</text>
-  <text x="660" y="416" font-family="Georgia,serif" font-size="88"
-        font-weight="bold" fill="#ffffff" letter-spacing="-1">REISE</text>
+  <!-- top rule -->
+  <rect x="640" y="182" width="490" height="1" fill="url(#gr)"/>
 
-  <!-- Gold divider under title -->
-  <rect x="660" y="432" width="440" height="1.5" fill="url(#goldLine)"/>
+  <!-- EINE -->
+  <text x="640" y="272"
+    font-family="Georgia,serif" font-size="92"
+    font-weight="bold" fill="#ffffff">EINE</text>
 
-  <!-- Subtitle line 1 -->
-  <text x="660" y="470" font-family="Georgia,serif" font-size="22"
-        fill="#cfc0a2" letter-spacing="1">Geschichten &amp; Erzählungen</text>
+  <!-- KULINARISCHE -->
+  <text x="640" y="352"
+    font-family="Georgia,serif" font-size="62"
+    font-weight="bold" fill="#ffffff">KULINARISCHE</text>
 
-  <!-- Subtitle line 2 italic gold -->
-  <text x="660" y="500" font-family="Georgia,serif" font-size="22"
-        font-style="italic" fill="#d4a85c" letter-spacing="1">Die Basis aller Speisen</text>
+  <!-- REISE -->
+  <text x="640" y="440"
+    font-family="Georgia,serif" font-size="92"
+    font-weight="bold" fill="#ffffff">REISE</text>
 
-  <!-- Edition badge box -->
-  <rect x="660" y="524" width="320" height="28" fill="none"
-        stroke="#c8843a" stroke-width="0.8" opacity="0.45"/>
-  <text x="820" y="542" font-family="Georgia,serif" font-size="11"
-        fill="#c8843a" text-anchor="middle" letter-spacing="3.5" opacity="0.85">1. AUFLAGE · FIRST EDITION · 2026</text>
+  <!-- bottom rule -->
+  <rect x="640" y="458" width="490" height="1.5" fill="url(#gr)"/>
 
-  <!-- Website -->
-  <text x="1160" y="614" font-family="Georgia,serif" font-size="15"
-        fill="#7a6e60" text-anchor="end" letter-spacing="2">joedcosta.com</text>
+  <!-- Edition badge -->
+  <rect x="640" y="478" width="348" height="32"
+    fill="none" stroke="#c8843a" stroke-width="0.8" opacity="0.5"/>
+  <text x="814" y="499"
+    font-family="Georgia,serif" font-size="11.5"
+    fill="#c8843a" text-anchor="middle" letter-spacing="3.5">1. AUFLAGE · FIRST EDITION · 2026</text>
+
+  <!-- domain -->
+  <text x="1155" y="612"
+    font-family="Georgia,serif" font-size="14"
+    fill="#7a6e60" text-anchor="end" letter-spacing="2.5">joedcosta.com</text>
+
 </svg>

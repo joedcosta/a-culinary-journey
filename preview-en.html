@@ -140,8 +140,8 @@
   <div class="topbar-title">A Culinary Journey — Preview</div>
   <div class="topbar-right">
     <span class="page-info" id="page-info">Loading…</span>
-    <button class="view-btn active" id="btn-double" onclick="setView(2)">&#8859; Doppel#8859; Double</button>
-    <button class="view-btn" id="btn-single" onclick="setView(1)">&#8863; Einzel#8863; Single</button>
+    <button class="view-btn active" id="btn-double" onclick="setView(2)">&#8859; Double</button>
+    <button class="view-btn" id="btn-single" onclick="setView(1)">&#8863; Single</button>
   </div>
 </div>
 
@@ -153,15 +153,15 @@
 </div>
 
 <div class="mobile-gate">
-  <p>Open the preview directly in your browser. All 23 pages, perfectly on your device.</p>
+  <p>Open the preview directly in your browser. All 23 pages, perfectly optimised for your device.</p>
   <a class="open-btn" href="Preview-EN.pdf">Open Preview &#8599;</a>
   <div class="note">Opens as PDF in Safari / Chrome</div>
 </div>
 
 <div class="bottombar">
   <div class="nav-btns">
-    <button class="nav-btn" id="btn-prev" onclick="prevSpread()" disabled>&#8592; Zurück#8592; Back</button>
-    <button class="nav-btn" id="btn-next" onclick="nextSpread()">Next Weiter &#8594;#8594;</button>
+    <button class="nav-btn" id="btn-prev" onclick="prevSpread()" disabled>&#8592; Back</button>
+    <button class="nav-btn" id="btn-next" onclick="nextSpread()">Next &#8594;</button>
   </div>
   <span class="spread-counter" id="spread-info"></span>
   <a class="buy-link" href="https://joedcosta.com/#buy">Order Now</a>
@@ -191,7 +191,7 @@ pdfjsLib.getDocument('Preview-EN.pdf').promise.then(function(pdf){
   calcTotalSpreads();
   renderSpread(0);
 }).catch(function(err){
-  loader.innerHTML = '<span style="color:#c07060;font-size:0.6rem;letter-spacing:0.14em;">Fehler beim Laden. Bitte Seite neu laden.</span>';
+  loader.innerHTML = '<span style="color:#c07060;font-size:0.6rem;letter-spacing:0.14em;">Error loading. Please reload the page.</span>';
   console.error(err);
 });
 

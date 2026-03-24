@@ -714,9 +714,14 @@
 
 <script>
   const CONFIG = {
-    BOOK_COVER_URL:   "https://res.cloudinary.com/djzg1ulup/image/upload/v1771739932/Front__Cover_jgrhgf.jpg",
-    AUTHOR_PHOTO_URL: "https://res.cloudinary.com/djzg1ulup/image/upload/v1771744082/The_Author_portrait_2_i5roac.jpg",
-    PDF_PREVIEW_URL:  "",
+    BOOK_COVER_URL:   "images/Cover.png",
+    AUTHOR_PHOTO_URL: "images/Author.jpg",
+    PREVIEW_URLS: {
+      de: "preview-de.html",
+      en: "preview-de.html",   // replace with preview-en.html when ready
+      es: "preview-de.html",   // replace with preview-es.html when ready
+      pt: "preview-de.html",   // replace with preview-pt.html when ready
+    },
     LINKS: {
       tolino_ebook:  "#",
       d2d_ebook:     "#",
@@ -849,7 +854,7 @@
             <span class="spine-title">Eine Kulinarische Reise · J. D'Costa Andrade</span>
           </div>
           <div class="hardcover-front">
-            <img src="https://res.cloudinary.com/djzg1ulup/image/upload/v1771739932/Front__Cover_jgrhgf.jpg" alt="Cover"/>
+            <img src="images/Cover.png" alt="Cover"/>
           </div>
           <div class="hardcover-pages"></div>
         </div>
@@ -1090,6 +1095,8 @@ function navScrollTo(id) {
   document.getElementById('hero-cover-img').src  = CONFIG.BOOK_COVER_URL;
   document.getElementById('about-cover-img').src = CONFIG.BOOK_COVER_URL;
   document.getElementById('author-photo').src    = CONFIG.AUTHOR_PHOTO_URL;
+  document.getElementById('btn-preview').href    = CONFIG.PREVIEW_URLS.de;
+  document.getElementById('prev-open-btn').href  = CONFIG.PREVIEW_URLS.de;
 
   var L = CONFIG.LINKS;
   document.getElementById('lnk-tolino-ebook').href = L.tolino_ebook;
@@ -1189,6 +1196,8 @@ var T = {
     'buy-ribbon': 'Pre-Order · Mai 2026 · 10% Rabatt',
     'buy-btn-ebook': 'Jetzt kaufen', 'buy-btn-print': 'Jetzt kaufen', 'buy-btn-audio': 'Vorbestellen',
     'lang-kicker': 'Erhältlich in', 'lang-heading': 'Vier <em>Sprachen</em>',
+    'btn-order': 'Jetzt bestellen',
+    'btn-preview': 'Vorschau lesen',
     'auth-kicker': 'Über den Autor', 'auth-location': 'Barcelona, Spanien',
     'auth-tags': '<span class="tag">Unternehmer</span><span class="tag">Foodie</span><span class="tag">Autor</span><span class="tag">Denker</span><span class="tag">Barcelona</span>',
     'auth-bio': 'Entrepreneur, Berater, Foodie, Autor und Denker: Mit \u201eEine Kulinarische Reise\u201c legt er sein Erstlingswerk vor. Obwohl nicht in Deutschland geboren, ist sein Buch bewusst auf Deutsch verfasst, eine Hommage an seine Kindheit, die er dort verbracht hat. Als vielseitiger Geist verbindet er in seinem Wirken technologischen Fortschritt mit soziologischen Fragestellungen. Der Autor bezeichnet sich selbst, wenn gefragt, schmunzelnd als einen modernen Renaissance-Menschen, einen Polymath mit den Wurzeln eines Zigeuners. Heute lebt und arbeitet er von seiner Wahlheimat Spanien aus.',
@@ -1229,6 +1238,8 @@ var T = {
     'buy-ribbon': 'Pre-Order · May 2026 · 10% Discount',
     'buy-btn-ebook': 'Buy Now', 'buy-btn-print': 'Buy Now', 'buy-btn-audio': 'Pre-Order',
     'lang-kicker': 'Available in', 'lang-heading': 'Four <em>Languages</em>',
+    'btn-order': 'Order Now',
+    'btn-preview': 'Read Preview',
     'auth-kicker': 'About the Author', 'auth-location': 'Barcelona, Spain',
     'auth-tags': '<span class="tag">Entrepreneur</span><span class="tag">Foodie</span><span class="tag">Author</span><span class="tag">Thinker</span><span class="tag">Barcelona</span>',
     'auth-bio': 'Entrepreneur, Consultant, Foodie, Author, and Thinker: With A Culinary Journey, he presents his debut work. Although not born in Germany, his book is intentionally written in German, a tribute to the childhood he spent there. As a versatile mind, his work bridges the gap between technological progress and sociological inquiry. When asked, the author describes himself with a smile as a modern-day Renaissance man: a polymath with the roots of a gypsy. Today, he lives and works from his adopted home in Spain.',
@@ -1269,6 +1280,8 @@ var T = {
     'buy-ribbon': 'Pre-Orden · Mayo 2026 · 10% Descuento',
     'buy-btn-ebook': 'Comprar', 'buy-btn-print': 'Comprar', 'buy-btn-audio': 'Pre-Orden',
     'lang-kicker': 'Disponible en', 'lang-heading': 'Cuatro <em>Idiomas</em>',
+    'btn-order': 'Pedir ahora',
+    'btn-preview': 'Leer Vista Previa',
     'auth-kicker': 'Sobre el Autor', 'auth-location': 'Barcelona, España',
     'auth-tags': '<span class="tag">Emprendedor</span><span class="tag">Foodie</span><span class="tag">Autor</span><span class="tag">Pensador</span><span class="tag">Barcelona</span>',
     'auth-bio': 'Emprendedor, consultor, foodie, autor y pensador: Con Una travesía culinaria, presenta su primera obra. Aunque no nació en Alemania, su libro está escrito deliberadamente en alemán, como un homenaje a la infancia que vivió allí. Poseedor de una mente inquieta, su labor vincula el progreso tecnológico con los interrogantes sociológicos. Al preguntarle, el autor se define a sí mismo con una sonrisa como un hombre del Renacimiento moderno: un polímata con raíces de gitano. En la actualidad, vive y desarrolla su actividad desde España, su país de adopción.',
@@ -1309,6 +1322,8 @@ var T = {
     'buy-ribbon': 'Pré-encomenda · Maio 2026 · 10% Desconto',
     'buy-btn-ebook': 'Comprar', 'buy-btn-print': 'Comprar', 'buy-btn-audio': 'Pré-encomenda',
     'lang-kicker': 'Disponível em', 'lang-heading': 'Quatro <em>Idiomas</em>',
+    'btn-order': 'Encomendar agora',
+    'btn-preview': 'Ler Amostra',
     'auth-kicker': 'Sobre o Autor', 'auth-location': 'Barcelona, Espanha',
     'auth-tags': '<span class="tag">Empreendedor</span><span class="tag">Foodie</span><span class="tag">Autor</span><span class="tag">Pensador</span><span class="tag">Barcelona</span>',
     'auth-bio': 'Empreendedor, consultor, entusiasta da gastronomia, autor e pensador: Com Uma Jornada Culinária, ele apresenta sua obra de estreia. Embora não tenha nascido na Alemanha, seu livro foi deliberadamente escrito em alemão, uma homenagem à infância que passou lá. Como um espírito versátil, ele une em seu trabalho o progresso tecnológico a questões sociológicas. Quando questionado, o autor descreve-se com um sorriso como um homem renascentista moderno: um polímata com raízes de cigano. Hoje, vive e trabalha a partir da Espanha, sua pátria de adoção.',
@@ -1326,6 +1341,11 @@ function setLang(lang) {
     var el = document.getElementById(id);
     if (el) el.innerHTML = t[id];
   }
+  // swap preview links to correct language PDF viewer
+  var previewUrl = CONFIG.PREVIEW_URLS[lang] || CONFIG.PREVIEW_URLS.de;
+  document.getElementById('btn-preview').href   = previewUrl;
+  document.getElementById('prev-open-btn').href = previewUrl;
+  // restore buy links (innerHTML loop may have cleared href)
   document.getElementById('buy-btn-ebook').href = CONFIG.LINKS.direct_ebook;
   document.getElementById('buy-btn-print').href = CONFIG.LINKS.direct_print;
   document.getElementById('buy-btn-audio').href = CONFIG.LINKS.direct_audio;

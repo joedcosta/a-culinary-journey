@@ -500,7 +500,7 @@
     .languages-header { margin-bottom: 52px; }
     .lang-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
     .lang-card {
-      background: var(--ink-mid); padding: 44px 28px;
+      background: var(--ink-mid); padding: 0;
       border: 1px solid rgba(200,132,58,0.08);
       cursor: pointer; transition: all 0.3s;
       position: relative; overflow: hidden;
@@ -514,6 +514,19 @@
       border-color: rgba(200,132,58,0.35);
       background: rgba(200,132,58,0.04);
     }
+    /* cover image in language card */
+    .lang-card-cover {
+      width: 100%; margin-bottom: 16px; overflow: hidden;
+      border: 1px solid rgba(200,132,58,0.12);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+    .lang-card-cover img {
+      width: 100%; display: block;
+      object-fit: cover; object-position: top;
+      aspect-ratio: 3/4;
+      transition: transform 0.4s ease;
+    }
+    .lang-card:hover .lang-card-cover img { transform: scale(1.03); }
     .lang-card .lang-cta {
       margin-top: 18px; font-family: 'Cinzel', serif; font-size: 0.52rem;
       letter-spacing: 0.18em; text-transform: uppercase;
@@ -521,6 +534,9 @@
       transition: opacity 0.25s;
     }
     .lang-card:hover .lang-cta { opacity: 1; }
+    .lang-card-body {
+      padding: 20px 24px 28px;
+    }
     .lang-glyph {
       font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-style: italic;
       font-weight: 600; color: rgba(200,132,58,0.2); margin-bottom: 14px; line-height: 1;
@@ -769,6 +785,12 @@
       es: "preview-es.html",
       pt: "preview-pt.html",
     },
+    COVERS: {
+      de: "images/Cover.png",
+      en: "images/Cover-EN.jpg",
+      es: "images/Cover-ES.jpg",
+      pt: "images/Cover-PT.jpg",
+    },
     LINKS: {
       tolino_ebook:  "#",
       d2d_ebook:     "#",
@@ -848,7 +870,7 @@
 <!-- PULL QUOTE -->
 <div class="quote-band reveal">
   <blockquote id="pull-quote">
-    „Essen ist Erinnerung. Jedes Gericht erzählt eine Geschichte von Händen,
+    „Essen ist Erinnerung. Jedes Gericht erzählt eine Geschichte — von Händen,
     die es zubereitet haben, von Tischen, an denen es geteilt wurde."
   </blockquote>
   <span class="quote-attr" id="pull-attr">— J. D'Costa Andrade · Eine Kulinarische Reise</span>
@@ -925,35 +947,43 @@
   <div class="lang-grid">
 
     <div class="lang-card" onclick="selectLang('de')" role="button" tabindex="0" aria-label="Deutsch">
-      <div class="lang-glyph">DE</div>
+      <div class="lang-card-cover"><img src="images/Cover.png" alt="Eine Kulinarische Reise"/></div>
+      <div class="lang-card-body">
       <div class="lang-name">Deutsch</div>
       <div class="lang-title">Eine Kulinarische Reise<br><small style="font-size:.85em;color:var(--text-muted)">Geschichten &amp; Erzählungen</small></div>
       <span class="lang-avail now" id="lang-avail-de">Jetzt verfügbar</span>
       <div class="lang-cta" id="lang-cta-de">Auswählen ↓</div>
+      </div>
     </div>
 
     <div class="lang-card" onclick="selectLang('en')" role="button" tabindex="0" aria-label="English">
-      <div class="lang-glyph">EN</div>
+      <div class="lang-card-cover"><img src="images/Cover-EN.jpg" alt="A Culinary Journey"/></div>
+      <div class="lang-card-body">
       <div class="lang-name">English</div>
       <div class="lang-title">A Culinary Journey<br><small style="font-size:.85em;color:var(--text-muted)">Stories &amp; Tales</small></div>
       <span class="lang-avail pre" id="lang-avail-en">Pre-Order · May 2026</span>
       <div class="lang-cta" id="lang-cta-en">Select ↓</div>
+      </div>
     </div>
 
     <div class="lang-card" onclick="selectLang('es')" role="button" tabindex="0" aria-label="Español">
-      <div class="lang-glyph">ES</div>
+      <div class="lang-card-cover"><img src="images/Cover-ES.jpg" alt="Un Viaje Culinario"/></div>
+      <div class="lang-card-body">
       <div class="lang-name">Español</div>
       <div class="lang-title">Un Viaje Culinario<br><small style="font-size:.85em;color:var(--text-muted)">Historias y Relatos</small></div>
       <span class="lang-avail pre" id="lang-avail-es">Pre-Order · Mayo 2026</span>
       <div class="lang-cta" id="lang-cta-es">Seleccionar ↓</div>
+      </div>
     </div>
 
     <div class="lang-card" onclick="selectLang('pt')" role="button" tabindex="0" aria-label="Português">
-      <div class="lang-glyph">PT</div>
+      <div class="lang-card-cover"><img src="images/Cover-PT.jpg" alt="Uma Jornada Culinária"/></div>
+      <div class="lang-card-body">
       <div class="lang-name">Português</div>
       <div class="lang-title">Uma Jornada Culinária<br><small style="font-size:.85em;color:var(--text-muted)">Histórias e Narrativas</small></div>
       <span class="lang-avail pre" id="lang-avail-pt">Pré-encomenda · Maio 2026</span>
       <div class="lang-cta" id="lang-cta-pt">Selecionar ↓</div>
+      </div>
     </div>
 
   </div>
@@ -1045,24 +1075,15 @@
 <footer>
   <div class="footer-inner">
 
-        <!-- Editions quick links -->
-<div class="footer-col">
-  <h5 id="foot-col-editions">Editions</h5>
-  <ul>
-    <li><a id="foot-ebook" href="#buy" onclick="navScrollTo('buy'); return false;">E-Book</a></li>
-    <li><a id="foot-print" href="#buy" onclick="navScrollTo('buy'); return false;">Print</a></li>
-    <li><a id="foot-audio" href="#buy" onclick="navScrollTo('buy'); return false;">Audiobook</a></li>
-  </ul>
-</div>
-
     <!-- Book identity -->
     <div class="footer-brand">
       <div class="footer-book-title" id="foot-book-title">Eine Kulinarische Reise</div>
       <div class="footer-book-sub" id="foot-book-sub">Geschichten &amp; Erzählungen · die Basis aller Speisen</div>
+      <div class="footer-author-tag">J. D&#8217;Costa Andrade &nbsp;·&nbsp; 2026</div>
 
       <!-- Newsletter -->
       <div class="footer-newsletter">
-        <p class="footer-nl-label" id="foot-nl-label">Leave your email! Stay in the loop</p>
+        <p class="footer-nl-label" id="foot-nl-label">Stay in the loop</p>
         <form class="footer-nl-form" onsubmit="submitNewsletter(event)">
           <input type="email" id="foot-nl-input" class="footer-nl-input"
             placeholder="your@email.com" required autocomplete="email"/>
@@ -1072,30 +1093,35 @@
       </div>
     </div>
 
+    <!-- Editions quick links -->
+    <div class="footer-col">
+      <h5 id="foot-col-editions">Editions</h5>
+      <ul>
+        <li><a id="foot-ebook" href="" target="_blank">E-Book</a></li>
+        <li><a id="foot-print" href="" target="_blank">Print</a></li>
+        <li><a id="foot-audio" href="" target="_blank">Audiobook</a></li>
+      </ul>
+    </div>
+
     <!-- Social -->
     <div class="footer-col">
       <h5 id="foot-col-connect">Connect</h5>
       <div class="footer-social">
-
-        <a href="https://www.instagram.com/joses.table" target="_blank" rel="noopener" aria-label="Instagram" class="social-icon">
+        <a href="https://facebook.com/" target="_blank" rel="noopener" aria-label="Facebook" class="social-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+        <a href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram" class="social-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         </a>
-
-        <a href="https://joestable.clandestino.kitchen/" target="_blank" rel="noopener" aria-label="Website" class="social-icon">
+        <a href="https://x.com/" target="_blank" rel="noopener" aria-label="X" class="social-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://joedcosta.com" target="_blank" rel="noopener" aria-label="Website" class="social-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
         </a>
-
-        <a href="mailto:book@joedcosta.com" aria-label="Email" class="social-icon">
+        <a href="/cdn-cgi/l/email-protection#b7ddd8d2f7ddd8d2d3d4d8c4c3d699d4d8da" aria-label="Email" class="social-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </a>
-
-        <!--a href="https://facebook.com/" target="_blank" rel="noopener" aria-label="Facebook" class="social-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-        </a-->
-
-        <!--a href="https://x.com/" target="_blank" rel="noopener" aria-label="X" class="social-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a-->
       </div>
     </div>
 
@@ -1107,7 +1133,7 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ============================================================
 // SCROLL HELPER — avoids iOS iframe anchor redirect bug
 // ============================================================
@@ -1180,6 +1206,14 @@ function selectLang(lang) {
   var cards = document.querySelectorAll('.lang-card');
   var idx = ['de','en','es','pt'].indexOf(lang);
   if (idx >= 0 && cards[idx]) cards[idx].classList.add('active-lang');
+  // swap cover images for hero, about section and hardcover preview
+  var cover = CONFIG.COVERS[lang] || CONFIG.COVERS.de;
+  var heroImg = document.getElementById('hero-cover-img');
+  var aboutImg = document.getElementById('about-cover-img');
+  var hcImg = document.querySelector('.hardcover-front img');
+  if (heroImg)  heroImg.src  = cover;
+  if (aboutImg) aboutImg.src = cover;
+  if (hcImg)    hcImg.src    = cover;
   // smooth scroll to shop section
   setTimeout(function() { navScrollTo('buy'); }, 80);
 }
@@ -1474,7 +1508,7 @@ function submitNewsletter(e) {
   btn.disabled = true;
   btn.textContent = '…';
   // Replace SHEET_URL with your Google Apps Script web app URL
-  var SHEET_URL = 'https://script.google.com/macros/s/AKfycbzfK1xkjg1OWZdYnN08FMCMkmG2VX0yO21MNfMYa7Xa92sK7QBDiADrD32pI54cqHtf/exec';
+  var SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
   fetch(SHEET_URL, {
     method: 'POST',
     mode: 'no-cors',
@@ -1489,12 +1523,4 @@ function submitNewsletter(e) {
     btn.textContent = '→';
   }).catch(function() {
     confirm.style.display = 'block';
-    confirm.textContent = 'Something went wrong. Please try again.';
-    btn.disabled = false;
-    btn.textContent = '→';
-  });
-}
-</script>
-
-</body>
-</html>
+    confirm

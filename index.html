@@ -654,13 +654,47 @@
       gap: 48px; margin-bottom: 44px; padding-bottom: 44px;
       border-bottom: 1px solid rgba(200,132,58,0.07);
     }
+    .footer-brand { flex: 1; max-width: 340px; }
     .footer-book-title {
       font-family: 'Cormorant Garamond', serif; font-size: 1.35rem;
       font-style: italic; font-weight: 300; color: var(--parchment); margin-bottom: 3px;
     }
-    .footer-book-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 3px; }
-    .footer-author-tag { font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.18em; color: rgba(200,132,58,0.45); text-transform: uppercase; margin-top: 10px; }
-    .footer-links { display: flex; gap: 48px; }
+    .footer-book-sub {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      color: var(--text-muted); font-size: 0.9rem; margin-bottom: 3px;
+    }
+    .footer-author-tag {
+      font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.18em;
+      color: rgba(200,132,58,0.45); text-transform: uppercase; margin-top: 10px;
+    }
+    /* newsletter */
+    .footer-newsletter { margin-top: 28px; }
+    .footer-nl-label {
+      font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--saffron); margin-bottom: 10px;
+    }
+    .footer-nl-form { display: flex; gap: 0; }
+    .footer-nl-input {
+      flex: 1; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(200,132,58,0.25); border-right: none;
+      padding: 10px 14px; color: var(--parchment);
+      font-family: 'EB Garamond', serif; font-size: 0.9rem;
+      outline: none; transition: border-color 0.2s;
+    }
+    .footer-nl-input:focus { border-color: rgba(200,132,58,0.55); }
+    .footer-nl-input::placeholder { color: var(--text-muted); }
+    .footer-nl-btn {
+      background: var(--saffron); color: var(--ink);
+      border: none; padding: 10px 18px; cursor: pointer;
+      font-size: 1rem; transition: background 0.2s;
+    }
+    .footer-nl-btn:hover { background: var(--gold-light); }
+    .footer-nl-confirm {
+      font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--saffron); margin-top: 8px;
+    }
+    /* footer cols */
+    .footer-col { min-width: 120px; }
     .footer-col h5 {
       font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.18em;
       text-transform: uppercase; color: var(--saffron); margin-bottom: 14px;
@@ -668,11 +702,21 @@
     .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
     .footer-col ul li a { font-size: 0.83rem; color: var(--text-muted); transition: color 0.2s; }
     .footer-col ul li a:hover { color: var(--warm-sand); }
-    .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+    /* social icons */
+    .footer-social { display: flex; gap: 14px; margin-top: 4px; flex-wrap: wrap; }
+    .social-icon {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(200,132,58,0.2);
+      color: var(--text-muted); transition: all 0.2s; border-radius: 2px;
+    }
+    .social-icon svg { width: 16px; height: 16px; }
+    .social-icon:hover { color: var(--gold-light); border-color: rgba(200,132,58,0.5); background: rgba(200,132,58,0.06); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
     .footer-bottom p { font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.12em; color: rgba(200,132,58,0.3); text-transform: uppercase; }
 
     /* ── NAV ANCHOR OFFSET ── */
-    #about, #preview, #editions, #buy, #languages, #author { scroll-margin-top: 68px; }
+    #about, #preview, #buy, #languages, #author { scroll-margin-top: 68px; }
 
     /* ── SCROLL REVEAL ── */
     .reveal      { opacity:0; transform:translateY(28px);  transition:opacity .8s ease,transform .8s ease; }
@@ -693,8 +737,8 @@
       .author { grid-template-columns: 1fr; padding: 80px 48px; gap: 36px; }
       .author-portrait-wrap { width: 200px; }
       footer { padding: 52px 48px 36px; }
-      .footer-inner { flex-direction: column; }
-      .footer-links { flex-wrap: wrap; gap: 32px; }
+      .footer-inner { flex-direction: column; gap: 36px; }
+      .footer-brand { max-width: 100%; }
       .quote-band { padding: 60px 48px; }
     }
 
@@ -794,7 +838,7 @@
       Erinnerung als Gewürz und die unsichtbaren Zutaten, die jedes Gericht erst vollenden.
     </p>
     <div class="hero-actions">
-      <a id="btn-order" class="btn-primary" href="">Jetzt bestellen</a>
+      <a id="btn-order" class="btn-primary" href="#buy" onclick="navScrollTo('buy'); return false;">Jetzt bestellen</a>
       <a id="btn-preview" class="btn-outline" href="preview-de.html" target="_blank">Vorschau lesen</a>
     </div>
   </div>
@@ -804,7 +848,7 @@
 <!-- PULL QUOTE -->
 <div class="quote-band reveal">
   <blockquote id="pull-quote">
-    „Essen ist Erinnerung. Jedes Gericht erzählt eine Geschichte — von Händen,
+    „Essen ist Erinnerung. Jedes Gericht erzählt eine Geschichte von Händen,
     die es zubereitet haben, von Tischen, an denen es geteilt wurde."
   </blockquote>
   <span class="quote-attr" id="pull-attr">— J. D'Costa Andrade · Eine Kulinarische Reise</span>
@@ -1000,34 +1044,66 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div>
-      <div class="footer-book-title">Eine Kulinarische Reise</div>
-      <div class="footer-book-sub">Geschichten &amp; Erzählungen · die Basis aller Speisen</div>
-      <div class="footer-author-tag">J. D'Costa Andrade · 2026</div>
+
+    <!-- Editions quick links -->
+    <div class="footer-col">
+      <h5 id="foot-col-editions">Editions</h5>
+      <ul>
+        <li><a id="foot-ebook" href="" target="_blank">E-Book</a></li>
+        <li><a id="foot-print" href="" target="_blank">Print</a></li>
+        <li><a id="foot-audio" href="" target="_blank">Audiobook</a></li>
+      </ul>
     </div>
-    <div class="footer-links">
-      <div class="footer-col">
-        <h5>Ausgaben</h5>
-        <ul>
-          <li><a id="foot-ebook" href="" target="_blank">E-Book</a></li>
-          <li><a id="foot-print" href="" target="_blank">Druckausgabe</a></li>
-          <li><a id="foot-audio" href="" target="_blank">Hörbuch</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Sprachen</h5>
-        <ul>
-          <li><a href="#languages" onclick="navScrollTo('languages'); return false;">Deutsch</a></li>
-          <li><a href="#languages" onclick="navScrollTo('languages'); return false;">English</a></li>
-          <li><a href="#languages" onclick="navScrollTo('languages'); return false;">Español</a></li>
-          <li><a href="#languages" onclick="navScrollTo('languages'); return false;">Português</a></li>
-        </ul>
+
+    <!-- Book identity -->
+    <div class="footer-brand">
+      <div class="footer-book-title" id="foot-book-title">Eine Kulinarische Reise</div>
+      <div class="footer-book-sub" id="foot-book-sub">Geschichten &amp; Erzählungen · die Basis aller Speisen</div>
+
+      <!-- Newsletter -->
+      <div class="footer-newsletter">
+        <p class="footer-nl-label" id="foot-nl-label">Stay in the loop</p>
+        <form class="footer-nl-form" onsubmit="submitNewsletter(event)">
+          <input type="email" id="foot-nl-input" class="footer-nl-input"
+            placeholder="your@email.com" required autocomplete="email"/>
+          <button type="submit" class="footer-nl-btn" id="foot-nl-btn">&#8594;</button>
+        </form>
+        <p class="footer-nl-confirm" id="foot-nl-confirm" style="display:none;"></p>
       </div>
     </div>
+
+    <!-- Social -->
+    <div class="footer-col">
+      <h5 id="foot-col-connect">Connect</h5>
+      <div class="footer-social">
+
+        <a href="https://www.instagram.com/joses.table" target="_blank" rel="noopener" aria-label="Instagram" class="social-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+
+        <a href="https://joestable.clandestino.kitchen/" target="_blank" rel="noopener" aria-label="Website" class="social-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        </a>
+
+        <a href="mailto:book@joedcosta.com" aria-label="Email" class="social-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+
+        <!--a href="https://facebook.com/" target="_blank" rel="noopener" aria-label="Facebook" class="social-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a-->
+        
+        <!--a href="https://x.com/" target="_blank" rel="noopener" aria-label="X" class="social-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a-->
+      </div>
+    </div>
+
   </div>
+
   <div class="footer-bottom">
-    <p>© 2026 J. D'Costa Andrade · Alle Rechte vorbehalten</p>
-    <p>1. Auflage · First Edition</p>
+    <p id="foot-copy">&copy; 2026 J. D&#8217;Costa Andrade &nbsp;&middot;&nbsp; All rights reserved</p>
+    <p>1. Auflage &nbsp;&middot;&nbsp; First Edition</p>
   </div>
 </footer>
 
@@ -1059,7 +1135,7 @@ function navScrollTo(id) {
   document.getElementById('buy-btn-audio').href = L.direct_audio;
   document.getElementById('btn-order').href     = L.direct_ebook;
   document.getElementById('foot-ebook').href    = L.direct_ebook;
-  document.getElementById('foot-print').href    = L.direct_print;
+  document.getElementById('foot-print').href = L.direct_print;
   document.getElementById('foot-audio').href    = L.direct_audio;
 })();
 
@@ -1174,6 +1250,16 @@ var T = {
     'auth-kicker': 'Über den Autor', 'auth-location': 'Barcelona, Spanien',
     'auth-tags': '<span class="tag">Unternehmer</span><span class="tag">Foodie</span><span class="tag">Autor</span><span class="tag">Denker</span><span class="tag">Barcelona</span>',
     'auth-bio': 'Entrepreneur, Berater, Foodie, Autor und Denker: Mit \u201eEine Kulinarische Reise\u201c legt er sein Erstlingswerk vor. Obwohl nicht in Deutschland geboren, ist sein Buch bewusst auf Deutsch verfasst, eine Hommage an seine Kindheit, die er dort verbracht hat. Als vielseitiger Geist verbindet er in seinem Wirken technologischen Fortschritt mit soziologischen Fragestellungen. Der Autor bezeichnet sich selbst, wenn gefragt, schmunzelnd als einen modernen Renaissance-Menschen, einen Polymath mit den Wurzeln eines Zigeuners. Heute lebt und arbeitet er von seiner Wahlheimat Spanien aus.',
+    'foot-book-title': 'Eine Kulinarische Reise',
+    'foot-book-sub': 'Geschichten &amp; Erzählungen &nbsp;&middot;&nbsp; die Basis aller Speisen',
+    'foot-col-editions': 'Ausgaben',
+    'foot-col-connect': 'Kontakt',
+    'foot-nl-label': 'Newsletter',
+    'foot-nl-btn': '&#8594;',
+    'foot-copy': '&copy; 2026 J. D&#8217;Costa Andrade &nbsp;&middot;&nbsp; Alle Rechte vorbehalten',
+    'foot-ebook': 'E-Book',
+    'foot-print': 'Druckausgabe',
+    'foot-audio': 'Hörbuch',
   },
   en: {
     'nav-title': 'A Culinary Journey',
@@ -1220,6 +1306,16 @@ var T = {
     'auth-kicker': 'About the Author', 'auth-location': 'Barcelona, Spain',
     'auth-tags': '<span class="tag">Entrepreneur</span><span class="tag">Foodie</span><span class="tag">Author</span><span class="tag">Thinker</span><span class="tag">Barcelona</span>',
     'auth-bio': 'Entrepreneur, Consultant, Foodie, Author, and Thinker: With A Culinary Journey, he presents his debut work. Although not born in Germany, his book is intentionally written in German, a tribute to the childhood he spent there. As a versatile mind, his work bridges the gap between technological progress and sociological inquiry. When asked, the author describes himself with a smile as a modern-day Renaissance man: a polymath with the roots of a gypsy. Today, he lives and works from his adopted home in Spain.',
+    'foot-book-title': 'A Culinary Journey',
+    'foot-book-sub': 'Stories &amp; Tales &nbsp;&middot;&nbsp; The Foundation of All Dishes',
+    'foot-col-editions': 'Editions',
+    'foot-col-connect': 'Connect',
+    'foot-nl-label': 'Newsletter',
+    'foot-nl-btn': '&#8594;',
+    'foot-copy': '&copy; 2026 J. D&#8217;Costa Andrade &nbsp;&middot;&nbsp; All rights reserved',
+    'foot-ebook': 'E-Book',
+    'foot-print': 'Printed Edition',
+    'foot-audio': 'Audiobook',
   },
   es: {
     'nav-title': 'Un Viaje Culinario',
@@ -1266,6 +1362,16 @@ var T = {
     'auth-kicker': 'Sobre el Autor', 'auth-location': 'Barcelona, España',
     'auth-tags': '<span class="tag">Emprendedor</span><span class="tag">Foodie</span><span class="tag">Autor</span><span class="tag">Pensador</span><span class="tag">Barcelona</span>',
     'auth-bio': 'Emprendedor, consultor, foodie, autor y pensador: Con Una travesía culinaria, presenta su primera obra. Aunque no nació en Alemania, su libro está escrito deliberadamente en alemán, como un homenaje a la infancia que vivió allí. Poseedor de una mente inquieta, su labor vincula el progreso tecnológico con los interrogantes sociológicos. Al preguntarle, el autor se define a sí mismo con una sonrisa como un hombre del Renacimiento moderno: un polímata con raíces de gitano. En la actualidad, vive y desarrolla su actividad desde España, su país de adopción.',
+    'foot-book-title': 'Un Viaje Culinario',
+    'foot-book-sub': 'Historias y Relatos &nbsp;&middot;&nbsp; La Base de Todos los Platos',
+    'foot-col-editions': 'Ediciones',
+    'foot-col-connect': 'Contacto',
+    'foot-nl-label': 'Boletín',
+    'foot-nl-btn': '&#8594;',
+    'foot-copy': '&copy; 2026 J. D&#8217;Costa Andrade &nbsp;&middot;&nbsp; Todos los derechos reservados',
+    'foot-ebook': 'E-Book',
+    'foot-print': 'Edición Impresa',
+    'foot-audio': 'Audiolibro',
   },
   pt: {
     'nav-title': 'Uma Jornada Culinária',
@@ -1312,6 +1418,16 @@ var T = {
     'auth-kicker': 'Sobre o Autor', 'auth-location': 'Barcelona, Espanha',
     'auth-tags': '<span class="tag">Empreendedor</span><span class="tag">Foodie</span><span class="tag">Autor</span><span class="tag">Pensador</span><span class="tag">Barcelona</span>',
     'auth-bio': 'Empreendedor, consultor, entusiasta da gastronomia, autor e pensador: Com Uma Jornada Culinária, ele apresenta sua obra de estreia. Embora não tenha nascido na Alemanha, seu livro foi deliberadamente escrito em alemão, uma homenagem à infância que passou lá. Como um espírito versátil, ele une em seu trabalho o progresso tecnológico a questões sociológicas. Quando questionado, o autor descreve-se com um sorriso como um homem renascentista moderno: um polímata com raízes de cigano. Hoje, vive e trabalha a partir da Espanha, sua pátria de adoção.',
+    'foot-book-title': 'Uma Jornada Culinária',
+    'foot-book-sub': 'Histórias e Narrativas &nbsp;&middot;&nbsp; A Base de Todos os Pratos',
+    'foot-col-editions': 'Edições',
+    'foot-col-connect': 'Contacto',
+    'foot-nl-label': 'Newsletter',
+    'foot-nl-btn': '&#8594;',
+    'foot-copy': '&copy; 2026 J. D&#8217;Costa Andrade &nbsp;&middot;&nbsp; Todos os direitos reservados',
+    'foot-ebook': 'E-Book',
+    'foot-print': 'Edição Impressa',
+    'foot-audio': 'Audiolivro',
   }
 };
 
@@ -1326,14 +1442,57 @@ function setLang(lang) {
     var el = document.getElementById(id);
     if (el) el.innerHTML = t[id];
   }
-  // swap preview links to correct language PDF viewer
+  // restore all buy + footer links after innerHTML loop cleared hrefs
   var previewUrl = CONFIG.PREVIEW_URLS[lang] || CONFIG.PREVIEW_URLS.de;
-  document.getElementById('btn-preview').href   = previewUrl;
-  document.getElementById('prev-open-btn').href = previewUrl;
-  // restore buy links (innerHTML loop may have cleared href)
-  document.getElementById('buy-btn-ebook').href = CONFIG.LINKS.direct_ebook;
-  document.getElementById('buy-btn-print').href = CONFIG.LINKS.direct_print;
-  document.getElementById('buy-btn-audio').href = CONFIG.LINKS.direct_audio;
+  document.getElementById('btn-preview').href    = previewUrl;
+  document.getElementById('prev-open-btn').href  = previewUrl;
+  document.getElementById('buy-btn-ebook').href  = CONFIG.LINKS.direct_ebook;
+  document.getElementById('buy-btn-print').href  = CONFIG.LINKS.direct_print;
+  document.getElementById('buy-btn-audio').href  = CONFIG.LINKS.direct_audio;
+  document.getElementById('foot-ebook').href     = CONFIG.LINKS.direct_ebook;
+  document.getElementById('foot-print').href     = CONFIG.LINKS.direct_print;
+  document.getElementById('foot-audio').href     = CONFIG.LINKS.direct_audio;
+  // newsletter placeholder
+  var placeholders = { de: 'Ihre E-Mail-Adresse', en: 'your@email.com', es: 'tu@correo.com', pt: 'o.seu@email.com' };
+  var inp = document.getElementById('foot-nl-input');
+  if (inp) inp.placeholder = placeholders[lang] || 'your@email.com';
+  // newsletter confirm message
+  var confirms = { de: 'Vielen Dank! Wir melden uns.', en: 'Thank you! We will be in touch.', es: '¡Gracias! Estaremos en contacto.', pt: 'Obrigado! Entraremos em contacto.' };
+  var conf = document.getElementById('foot-nl-confirm');
+  if (conf) conf.dataset.ok = confirms[lang] || confirms.en;
+}
+
+// ============================================================
+// NEWSLETTER — posts to Google Sheets via fetch
+// ============================================================
+function submitNewsletter(e) {
+  e.preventDefault();
+  var email = document.getElementById('foot-nl-input').value.trim();
+  var confirm = document.getElementById('foot-nl-confirm');
+  var btn = document.getElementById('foot-nl-btn');
+  if (!email) return;
+  btn.disabled = true;
+  btn.textContent = '…';
+  // Replace SHEET_URL with your Google Apps Script web app URL
+  var SHEET_URL = 'https://script.google.com/macros/s/AKfycbzfK1xkjg1OWZdYnN08FMCMkmG2VX0yO21MNfMYa7Xa92sK7QBDiADrD32pI54cqHtf/exec';
+  fetch(SHEET_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, lang: document.documentElement.lang, ts: new Date().toISOString() })
+  }).then(function() {
+    document.getElementById('foot-nl-input').value = '';
+    confirm.style.display = 'block';
+    confirm.textContent = document.getElementById('foot-nl-confirm').dataset.ok ||
+      'Thank you! We will be in touch.';
+    btn.disabled = false;
+    btn.textContent = '→';
+  }).catch(function() {
+    confirm.style.display = 'block';
+    confirm.textContent = 'Something went wrong. Please try again.';
+    btn.disabled = false;
+    btn.textContent = '→';
+  });
 }
 </script>
 

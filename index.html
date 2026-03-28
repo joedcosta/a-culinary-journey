@@ -792,15 +792,21 @@
       pt: "images/Cover-PT.jpg",
     },
     LINKS: {
-      tolino_ebook:  "#",
-      d2d_ebook:     "#",
-      tolino_print:  "#",
-      d2d_print:     "#",
-      findaway:      "#",
-      audible:       "#",
-      direct_ebook:  "#",
-      direct_print:  "#",
-      direct_audio:  "#",
+      // ── E-Book buy links per language (update when available) ──
+      ebook_de:  "https://www.thalia.de/shop/home/artikeldetails/A1078785572", // LINE 801 — DE ebook (Thalia)
+      ebook_en:  "#",   // LINE 802 — EN ebook (add link when available)
+      ebook_es:  "#",   // LINE 803 — ES ebook (add link when available)
+      ebook_pt:  "#",   // LINE 804 — PT ebook (add link when available)
+      // ── Print pre-order links per language ──
+      print_de:  "#",   // LINE 806 — DE print (add link when available)
+      print_en:  "#",   // LINE 807 — EN print (add link when available)
+      print_es:  "#",   // LINE 808 — ES print (add link when available)
+      print_pt:  "#",   // LINE 809 — PT print (add link when available)
+      // ── Audio pre-order links per language ──
+      audio_de:  "#",   // LINE 811 — DE audio (add link when available)
+      audio_en:  "#",   // LINE 812 — EN audio (add link when available)
+      audio_es:  "#",   // LINE 813 — ES audio (add link when available)
+      audio_pt:  "#",   // LINE 814 — PT audio (add link when available)
     }
   };
 </script>
@@ -1107,19 +1113,19 @@
     <div class="footer-col">
       <h5 id="foot-col-connect">Connect</h5>
       <div class="footer-social">
-        <!--a href="https://facebook.com/" target="_blank" rel="noopener" aria-label="Facebook" class="social-icon">
+        <a href="https://facebook.com/" target="_blank" rel="noopener" aria-label="Facebook" class="social-icon">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-        </a-->
+        </a>
         <a href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram" class="social-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         </a>
-        <!--a href="https://x.com/" target="_blank" rel="noopener" aria-label="X" class="social-icon">
+        <a href="https://x.com/" target="_blank" rel="noopener" aria-label="X" class="social-icon">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a-->
-        <a href="https://joestable.clandestino.kitchen/" target="_blank" rel="noopener" aria-label="Website" class="social-icon">
+        </a>
+        <a href="https://joedcosta.com" target="_blank" rel="noopener" aria-label="Website" class="social-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
         </a>
-        <a href="mailto:book@joedcosta.com" aria-label="Email" class="social-icon">
+        <a href="/cdn-cgi/l/email-protection#b7ddd8d2f7ddd8d2d3d4d8c4c3d699d4d8da" aria-label="Email" class="social-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </a>
       </div>
@@ -1155,14 +1161,8 @@ function navScrollTo(id) {
   document.getElementById('btn-preview').href    = CONFIG.PREVIEW_URLS.de;
   document.getElementById('prev-open-btn').href  = CONFIG.PREVIEW_URLS.de;
 
-  var L = CONFIG.LINKS;
-  document.getElementById('buy-btn-ebook').href = L.direct_ebook;
-  document.getElementById('buy-btn-print').href = L.direct_print;
-  document.getElementById('buy-btn-audio').href = L.direct_audio;
-  document.getElementById('btn-order').href     = L.direct_ebook;
-  document.getElementById('foot-ebook').href    = L.direct_ebook;
-  document.getElementById('foot-print').href = L.direct_print;
-  document.getElementById('foot-audio').href    = L.direct_audio;
+  // Set default DE links on page load
+  applyLangLinks('de');
 })();
 
 // ============================================================
@@ -1465,6 +1465,23 @@ var T = {
   }
 };
 
+// ============================================================
+// APPLY LANGUAGE-SPECIFIC BUY LINKS
+// ============================================================
+function applyLangLinks(lang) {
+  var L = CONFIG.LINKS;
+  var ebook = L['ebook_' + lang] || L.ebook_de;
+  var print = L['print_' + lang] || L.print_de;
+  var audio = L['audio_' + lang] || L.audio_de;
+  document.getElementById('buy-btn-ebook').href = ebook;
+  document.getElementById('buy-btn-print').href = print;
+  document.getElementById('buy-btn-audio').href = audio;
+  document.getElementById('btn-order').href     = ebook;
+  document.getElementById('foot-ebook').href    = ebook;
+  document.getElementById('foot-print').href    = print;
+  document.getElementById('foot-audio').href    = audio;
+}
+
 function setLang(lang) {
   var titles = { de: 'Eine Kulinarische Reise', en: 'A Culinary Journey', es: 'Un Viaje Culinario', pt: 'Uma Jornada Culinária' };
   document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
@@ -1478,14 +1495,9 @@ function setLang(lang) {
   }
   // restore all buy + footer links after innerHTML loop cleared hrefs
   var previewUrl = CONFIG.PREVIEW_URLS[lang] || CONFIG.PREVIEW_URLS.de;
-  document.getElementById('btn-preview').href    = previewUrl;
-  document.getElementById('prev-open-btn').href  = previewUrl;
-  document.getElementById('buy-btn-ebook').href  = CONFIG.LINKS.direct_ebook;
-  document.getElementById('buy-btn-print').href  = CONFIG.LINKS.direct_print;
-  document.getElementById('buy-btn-audio').href  = CONFIG.LINKS.direct_audio;
-  document.getElementById('foot-ebook').href     = CONFIG.LINKS.direct_ebook;
-  document.getElementById('foot-print').href     = CONFIG.LINKS.direct_print;
-  document.getElementById('foot-audio').href     = CONFIG.LINKS.direct_audio;
+  document.getElementById('btn-preview').href   = previewUrl;
+  document.getElementById('prev-open-btn').href = previewUrl;
+  applyLangLinks(lang);
   // newsletter placeholder
   var placeholders = { de: 'Ihre E-Mail-Adresse', en: 'your@email.com', es: 'tu@correo.com', pt: 'o.seu@email.com' };
   var inp = document.getElementById('foot-nl-input');

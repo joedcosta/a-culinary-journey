@@ -794,19 +794,19 @@
     LINKS: {
       // ── E-Book buy links per language (update when available) ──
       ebook_de:  "https://www.thalia.de/shop/home/artikeldetails/A1078785572", // LINE 801 — DE ebook (Thalia)
-      ebook_en:  "#",   // LINE 802 — EN ebook (add link when available)
-      ebook_es:  "#",   // LINE 803 — ES ebook (add link when available)
-      ebook_pt:  "#",   // LINE 804 — PT ebook (add link when available)
+      ebook_en:  "coming-soon.html?lang=en&format=ebook",   // LINE 797 — EN ebook Stripe link — EN ebook (add link when available)
+      ebook_es:  "coming-soon.html?lang=es&format=ebook",   // LINE 798 — ES ebook Stripe link — ES ebook (add link when available)
+      ebook_pt:  "coming-soon.html?lang=pt&format=ebook",   // LINE 799 — PT ebook Stripe link — PT ebook (add link when available)
       // ── Print pre-order links per language ──
-      print_de:  "#",   // LINE 806 — DE print (add link when available)
-      print_en:  "#",   // LINE 807 — EN print (add link when available)
-      print_es:  "#",   // LINE 808 — ES print (add link when available)
-      print_pt:  "#",   // LINE 809 — PT print (add link when available)
+      print_de:  "coming-soon.html?lang=de&format=print",   // LINE 801 — DE print Stripe link — DE print (add link when available)
+      print_en:  "coming-soon.html?lang=en&format=print",   // LINE 802 — EN print Stripe link — EN print (add link when available)
+      print_es:  "coming-soon.html?lang=es&format=print",   // LINE 803 — ES print Stripe link — ES print (add link when available)
+      print_pt:  "coming-soon.html?lang=pt&format=print",   // LINE 804 — PT print Stripe link — PT print (add link when available)
       // ── Audio pre-order links per language ──
-      audio_de:  "#",   // LINE 811 — DE audio (add link when available)
-      audio_en:  "#",   // LINE 812 — EN audio (add link when available)
-      audio_es:  "#",   // LINE 813 — ES audio (add link when available)
-      audio_pt:  "#",   // LINE 814 — PT audio (add link when available)
+      audio_de:  "coming-soon.html?lang=de&format=audio",   // LINE 806 — DE audio Stripe link — DE audio (add link when available)
+      audio_en:  "coming-soon.html?lang=en&format=audio",   // LINE 807 — EN audio Stripe link — EN audio (add link when available)
+      audio_es:  "coming-soon.html?lang=es&format=audio",   // LINE 808 — ES audio Stripe link — ES audio (add link when available)
+      audio_pt:  "coming-soon.html?lang=pt&format=audio",   // LINE 809 — PT audio Stripe link — PT audio (add link when available)
     }
   };
 </script>
@@ -1473,13 +1473,20 @@ function applyLangLinks(lang) {
   var ebook = L['ebook_' + lang] || L.ebook_de;
   var print = L['print_' + lang] || L.print_de;
   var audio = L['audio_' + lang] || L.audio_de;
-  document.getElementById('buy-btn-ebook').href = ebook;
-  document.getElementById('buy-btn-print').href = print;
-  document.getElementById('buy-btn-audio').href = audio;
-  document.getElementById('btn-order').href     = ebook;
-  document.getElementById('foot-ebook').href    = ebook;
-  document.getElementById('foot-print').href    = print;
-  document.getElementById('foot-audio').href    = audio;
+  // external store links open in new tab; coming-soon page opens in same tab
+  function setLink(id, url) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.href = url;
+    el.target = url.indexOf('coming-soon') >= 0 ? '_self' : '_blank';
+  }
+  setLink('buy-btn-ebook', ebook);
+  setLink('buy-btn-print', print);
+  setLink('buy-btn-audio', audio);
+  setLink('btn-order',     ebook);
+  setLink('foot-ebook',    ebook);
+  setLink('foot-print',    print);
+  setLink('foot-audio',    audio);
 }
 
 function setLang(lang) {

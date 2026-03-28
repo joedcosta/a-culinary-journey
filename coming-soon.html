@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coming Soon — A Culinary Journey</title>
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink:        #0f0d0a;
+      --ink-mid:    #1c1914;
+      --ink-soft:   #2e2820;
+      --parchment:  #f0e8d8;
+      --warm-sand:  #cfc0a2;
+      --saffron:    #c8843a;
+      --gold-light: #d4a85c;
+      --text-muted: #7a6e60;
+      --terracotta: #8b3a2a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'EB Garamond', Georgia, serif;
+      background: var(--ink);
+      color: var(--parchment);
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* grain overlay */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.022;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 52px; height: 60px;
+      background: rgba(15,13,10,0.96);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(200,132,58,0.15);
+    }
+    .nav-title {
+      font-family: 'Cinzel', serif; font-size: 0.7rem;
+      letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold-light);
+    }
+    .nav-back {
+      font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--warm-sand);
+      display: flex; align-items: center; gap: 8px; transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--gold-light); }
+    .nav-back::before { content: '←'; font-size: 0.9rem; }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 100px 40px 60px;
+      position: relative; overflow: hidden;
+    }
+
+    /* ambient glow */
+    main::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%,
+        rgba(200,132,58,0.07) 0%, transparent 70%);
+    }
+
+    .cs-wrap {
+      max-width: 640px; width: 100%;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.9s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* edition badge */
+    .cs-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--saffron);
+      border: 1px solid rgba(200,132,58,0.35); padding: 6px 14px;
+      margin-bottom: 36px; background: rgba(200,132,58,0.06);
+    }
+    .cs-badge-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--saffron);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    /* icon */
+    .cs-icon {
+      width: 52px; height: 52px;
+      color: rgba(200,132,58,0.55); margin-bottom: 28px;
+    }
+
+    /* kicker */
+    .cs-kicker {
+      font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.26em;
+      text-transform: uppercase; color: var(--saffron);
+      margin-bottom: 14px; display: block;
+    }
+
+    /* heading */
+    .cs-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 300; font-style: italic;
+      color: var(--parchment); line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    .cs-heading em { font-weight: 600; color: var(--gold-light); font-style: italic; }
+
+    /* sub */
+    .cs-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-style: italic;
+      color: var(--warm-sand); margin-bottom: 32px; line-height: 1.6;
+    }
+
+    /* ornament */
+    .ornament {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 36px;
+    }
+    .ornament::before, .ornament::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(to right, transparent, rgba(200,132,58,0.4));
+    }
+    .ornament::after { background: linear-gradient(to left, transparent, rgba(200,132,58,0.4)); }
+    .ornament span { font-size: 0.75rem; color: var(--saffron); }
+
+    /* desc */
+    .cs-desc {
+      font-size: 1.02rem; line-height: 1.85; color: var(--warm-sand);
+      margin-bottom: 40px;
+    }
+
+    /* ── STRIPE SECTION ── */
+    .cs-stripe {
+      background: rgba(200,132,58,0.06);
+      border: 1px solid rgba(200,132,58,0.2);
+      padding: 28px 32px; margin-bottom: 40px;
+    }
+    .cs-stripe-label {
+      font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--saffron); margin-bottom: 10px;
+    }
+    .cs-stripe-desc {
+      font-size: 0.92rem; color: var(--warm-sand); line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .cs-stripe-discount {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.16em;
+      text-transform: uppercase; color: #c07060;
+      border: 1px solid rgba(139,58,42,0.4); padding: 4px 10px;
+      margin-bottom: 20px;
+    }
+
+    /* Stripe CTA button */
+    .cs-stripe-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; padding: 16px 32px;
+      background: var(--saffron); color: var(--ink);
+      font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.2em;
+      text-transform: uppercase; font-weight: 600;
+      cursor: pointer; transition: background 0.25s, transform 0.2s;
+      border: none; text-decoration: none;
+    }
+    .cs-stripe-btn:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .cs-stripe-btn:disabled,
+    .cs-stripe-btn.unavailable {
+      background: rgba(200,132,58,0.15); color: var(--text-muted);
+      border: 1px solid rgba(200,132,58,0.2); cursor: not-allowed;
+      transform: none;
+    }
+    .cs-stripe-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* ── NEWSLETTER ── */
+    .cs-nl-wrap {
+      border-top: 1px solid rgba(200,132,58,0.1);
+      padding-top: 36px;
+    }
+    .cs-nl-kicker {
+      font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--saffron); margin-bottom: 8px;
+    }
+    .cs-nl-desc {
+      font-size: 0.95rem; color: var(--text-muted); margin-bottom: 18px; line-height: 1.6;
+    }
+    .cs-nl-form { display: flex; gap: 0; }
+    .cs-nl-input {
+      flex: 1; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(200,132,58,0.25); border-right: none;
+      padding: 12px 16px; color: var(--parchment);
+      font-family: 'EB Garamond', serif; font-size: 1rem;
+      outline: none; transition: border-color 0.2s;
+    }
+    .cs-nl-input:focus { border-color: rgba(200,132,58,0.55); }
+    .cs-nl-input::placeholder { color: var(--text-muted); }
+    .cs-nl-btn {
+      background: var(--saffron); color: var(--ink);
+      border: none; padding: 12px 22px; cursor: pointer;
+      font-size: 1.1rem; transition: background 0.2s;
+    }
+    .cs-nl-btn:hover { background: var(--gold-light); }
+    .cs-nl-confirm {
+      font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--saffron); margin-top: 10px;
+      display: none;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 28px 40px;
+      border-top: 1px solid rgba(200,132,58,0.07);
+    }
+    footer p {
+      font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(200,132,58,0.3);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      main { padding: 80px 20px 40px; }
+      .cs-stripe { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-title" id="nav-title">Eine Kulinarische Reise</div>
+  <a class="nav-back" href="index.html" id="nav-back">Zurück</a>
+</nav>
+
+<!-- MAIN -->
+<main>
+  <div class="cs-wrap">
+
+    <!-- Badge -->
+    <div class="cs-badge">
+      <span class="cs-badge-dot"></span>
+      <span id="cs-badge-text">Demnächst verfügbar</span>
+    </div>
+
+    <!-- Format icon (swapped by JS) -->
+    <div id="cs-icon-wrap">
+      <!-- ebook icon default -->
+      <svg class="cs-icon" id="cs-icon" viewBox="0 0 48 48" fill="none">
+        <rect x="8" y="6" width="32" height="36" rx="2" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="16" y1="16" x2="32" y2="16" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="16" y1="22" x2="32" y2="22" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="16" y1="28" x2="26" y2="28" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+    </div>
+
+    <!-- Heading -->
+    <span class="cs-kicker" id="cs-kicker">Verfügbar als</span>
+    <h1 class="cs-heading" id="cs-heading">
+      <em id="cs-format-name">Digitale Ausgabe</em>
+    </h1>
+    <p class="cs-sub" id="cs-sub">Eine Kulinarische Reise &nbsp;·&nbsp; J. D'Costa Andrade</p>
+
+    <div class="ornament"><span>✦</span></div>
+
+    <p class="cs-desc" id="cs-desc">
+      Diese Ausgabe erscheint im Mai 2026. Bestellen Sie jetzt vor und sichern Sie sich 10% Rabatt auf den regulären Preis — direkt, ohne Umwege.
+    </p>
+
+    <!-- ── STRIPE PRE-ORDER BLOCK ── -->
+    <div class="cs-stripe" id="cs-stripe-block">
+      <div class="cs-stripe-label" id="cs-stripe-label">Vorbestellen</div>
+      <p class="cs-stripe-desc" id="cs-stripe-desc">
+        Sichern Sie sich Ihr Exemplar jetzt mit 10% Frühbucherrabatt. Ihr Exemplar wird im Mai 2026 ausgeliefert.
+      </p>
+      <div class="cs-stripe-discount" id="cs-discount-badge">
+        ✦ &nbsp; 10% Frühbucherrabatt bereits eingerechnet
+      </div>
+
+      <!--
+      ══════════════════════════════════════════════════════════
+      STRIPE LINK — replace "#" below with your Stripe Payment Link
+      One link per format × language combination.
+      Format:  https://buy.stripe.com/XXXXXXXX
+      Note:    Create the link in Stripe Dashboard →
+               Products → Payment Links → Create link
+               Set the discounted price there (10% already applied).
+
+      DE PRINT  → line below labelled  STRIPE_DE_PRINT
+      DE AUDIO  → line below labelled  STRIPE_DE_AUDIO
+      EN EBOOK  → line below labelled  STRIPE_EN_EBOOK
+      EN PRINT  → line below labelled  STRIPE_EN_PRINT
+      EN AUDIO  → line below labelled  STRIPE_EN_AUDIO
+      ES EBOOK  → line below labelled  STRIPE_ES_EBOOK
+      ES PRINT  → line below labelled  STRIPE_ES_PRINT
+      ES AUDIO  → line below labelled  STRIPE_ES_AUDIO
+      PT EBOOK  → line below labelled  STRIPE_PT_EBOOK
+      PT PRINT  → line below labelled  STRIPE_PT_PRINT
+      PT AUDIO  → line below labelled  STRIPE_PT_AUDIO
+      ══════════════════════════════════════════════════════════
+      -->
+      <script>
+        var STRIPE_LINKS = {
+          de: {
+            ebook: null,                // DE ebook handled by Thalia — not used here
+            print: null,                // STRIPE_DE_PRINT  ← paste link here (line ~226)
+            audio: null,                // STRIPE_DE_AUDIO  ← paste link here (line ~227)
+          },
+          en: {
+            ebook: null,                // STRIPE_EN_EBOOK  ← paste link here (line ~230)
+            print: null,                // STRIPE_EN_PRINT  ← paste link here (line ~231)
+            audio: null,                // STRIPE_EN_AUDIO  ← paste link here (line ~232)
+          },
+          es: {
+            ebook: null,                // STRIPE_ES_EBOOK  ← paste link here (line ~235)
+            print: null,                // STRIPE_ES_PRINT  ← paste link here (line ~236)
+            audio: null,                // STRIPE_ES_AUDIO  ← paste link here (line ~237)
+          },
+          pt: {
+            ebook: null,                // STRIPE_PT_EBOOK  ← paste link here (line ~240)
+            print: null,                // STRIPE_PT_PRINT  ← paste link here (line ~241)
+            audio: null,                // STRIPE_PT_AUDIO  ← paste link here (line ~242)
+          },
+        };
+      </script>
+
+      <!-- CTA — active if Stripe link present, greyed if not -->
+      <a class="cs-stripe-btn unavailable" id="cs-stripe-btn" href="#" onclick="return handleStripeClick(event)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        <span id="cs-btn-text">Demnächst bestellbar</span>
+      </a>
+      <p style="font-family:'Cinzel',serif;font-size:0.48rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);text-align:center;margin-top:10px;" id="cs-btn-sub">
+        Stripe Secure Checkout · SSL verschlüsselt
+      </p>
+    </div>
+
+    <!-- ── NEWSLETTER ── -->
+    <div class="cs-nl-wrap">
+      <div class="cs-nl-kicker" id="nl-kicker">Benachrichtigung erhalten</div>
+      <p class="cs-nl-desc" id="nl-desc">
+        Tragen Sie Ihre E-Mail ein und wir informieren Sie sofort, wenn diese Ausgabe bestellbar ist.
+      </p>
+      <form class="cs-nl-form" onsubmit="submitNewsletter(event)">
+        <input type="email" id="nl-input" class="cs-nl-input"
+          placeholder="Ihre E-Mail-Adresse" required autocomplete="email" />
+        <button type="submit" class="cs-nl-btn" id="nl-btn">&#8594;</button>
+      </form>
+      <p class="cs-nl-confirm" id="nl-confirm"></p>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p id="cs-foot">&copy; 2026 J. D'Costa Andrade &nbsp;·&nbsp; All rights reserved</p>
+</footer>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// CONTENT PER LANGUAGE × FORMAT
+// ══════════════════════════════════════════════════════════════
+var COPY = {
+  de: {
+    ebook: {
+      badge:       'Demnächst verfügbar',
+      kicker:      'Verfügbar als',
+      format:      'Digitale Ausgabe',
+      sub:         'Eine Kulinarische Reise · J. D\'Costa Andrade',
+      desc:        'Diese Ausgabe erscheint im Mai 2026. Bestellen Sie jetzt vor und sichern Sie sich 10% Frühbucherrabatt — direkt, ohne Umwege.',
+      stripeLabel: 'E-Book vorbestellen',
+      stripeDesc:  'Sofortiger digitaler Zugang ab Mai 2026. Ihr Rabatt ist bereits eingerechnet.',
+      discount:    '✦  10% Frühbucherrabatt bereits eingerechnet',
+      btnText:     'Jetzt vorbestellen',
+      btnSub:      'Stripe Secure Checkout · SSL verschlüsselt',
+      nlKicker:    'Benachrichtigung erhalten',
+      nlDesc:      'Wir informieren Sie sofort, wenn diese Ausgabe bestellbar ist.',
+      nlPlaceholder:'Ihre E-Mail-Adresse',
+      nlConfirm:   'Vielen Dank! Wir melden uns.',
+      navBack:     '← Zurück',
+      navTitle:    'Eine Kulinarische Reise',
+      foot:        '© 2026 J. D\'Costa Andrade · Alle Rechte vorbehalten',
+    },
+    print: {
+      badge:       'Pre-Order · Mai 2026',
+      kicker:      'Verfügbar als',
+      format:      'Druckausgabe',
+      sub:         'Eine Kulinarische Reise · J. D\'Costa Andrade',
+      desc:        'Die gedruckte Ausgabe erscheint im Mai 2026. Jetzt vorbestellen und 10% sparen — Ihr Exemplar wird automatisch versandt.',
+      stripeLabel: 'Druckausgabe vorbestellen',
+      stripeDesc:  'Gedruckt und gebunden, weltweit versandt ab Mai 2026. Preis inkl. 10% Rabatt.',
+      discount:    '✦  10% Frühbucherrabatt bereits eingerechnet',
+      btnText:     'Jetzt vorbestellen',
+      btnSub:      'Stripe Secure Checkout · SSL verschlüsselt',
+      nlKicker:    'Benachrichtigung erhalten',
+      nlDesc:      'Wir informieren Sie sofort, wenn diese Ausgabe bestellbar ist.',
+      nlPlaceholder:'Ihre E-Mail-Adresse',
+      nlConfirm:   'Vielen Dank! Wir melden uns.',
+      navBack:     '← Zurück',
+      navTitle:    'Eine Kulinarische Reise',
+      foot:        '© 2026 J. D\'Costa Andrade · Alle Rechte vorbehalten',
+    },
+    audio: {
+      badge:       'Pre-Order · Mai 2026',
+      kicker:      'Verfügbar als',
+      format:      'Audio-Ausgabe',
+      sub:         'Eine Kulinarische Reise · J. D\'Costa Andrade',
+      desc:        'Das Hörbuch erscheint im Mai 2026. Jetzt vorbestellen und 10% Frühbucherrabatt sichern.',
+      stripeLabel: 'Hörbuch vorbestellen',
+      stripeDesc:  'Digitales Hörbuch, ab Mai 2026 verfügbar. Preis inkl. 10% Rabatt.',
+      discount:    '✦  10% Frühbucherrabatt bereits eingerechnet',
+      btnText:     'Jetzt vorbestellen',
+      btnSub:      'Stripe Secure Checkout · SSL verschlüsselt',
+      nlKicker:    'Benachrichtigung erhalten',
+      nlDesc:      'Wir informieren Sie sofort, wenn das Hörbuch bestellbar ist.',
+      nlPlaceholder:'Ihre E-Mail-Adresse',
+      nlConfirm:   'Vielen Dank! Wir melden uns.',
+      navBack:     '← Zurück',
+      navTitle:    'Eine Kulinarische Reise',
+      foot:        '© 2026 J. D\'Costa Andrade · Alle Rechte vorbehalten',
+    },
+  },
+  en: {
+    ebook: {
+      badge:       'Coming May 2026',
+      kicker:      'Available as',
+      format:      'Digital Edition',
+      sub:         'A Culinary Journey · J. D\'Costa Andrade',
+      desc:        'The English e-book arrives in May 2026. Pre-order now to lock in your 10% early-bird discount.',
+      stripeLabel: 'Pre-order E-Book',
+      stripeDesc:  'Instant digital access from May 2026. Discount already applied.',
+      discount:    '✦  10% early-bird discount already applied',
+      btnText:     'Pre-Order Now',
+      btnSub:      'Stripe Secure Checkout · SSL encrypted',
+      nlKicker:    'Get notified',
+      nlDesc:      'Leave your email and we will let you know the moment this edition is available.',
+      nlPlaceholder:'your@email.com',
+      nlConfirm:   'Thank you! We will be in touch.',
+      navBack:     '← Back',
+      navTitle:    'A Culinary Journey',
+      foot:        '© 2026 J. D\'Costa Andrade · All rights reserved',
+    },
+    print: {
+      badge:       'Pre-Order · May 2026',
+      kicker:      'Available as',
+      format:      'Printed Edition',
+      sub:         'A Culinary Journey · J. D\'Costa Andrade',
+      desc:        'The printed edition ships in May 2026. Pre-order now and save 10% — your copy will be sent automatically.',
+      stripeLabel: 'Pre-order Print',
+      stripeDesc:  'Printed and bound, shipped worldwide from May 2026. 10% discount already applied.',
+      discount:    '✦  10% early-bird discount already applied',
+      btnText:     'Pre-Order Now',
+      btnSub:      'Stripe Secure Checkout · SSL encrypted',
+      nlKicker:    'Get notified',
+      nlDesc:      'Leave your email and we will let you know the moment this edition is available.',
+      nlPlaceholder:'your@email.com',
+      nlConfirm:   'Thank you! We will be in touch.',
+      navBack:     '← Back',
+      navTitle:    'A Culinary Journey',
+      foot:        '© 2026 J. D\'Costa Andrade · All rights reserved',
+    },
+    audio: {
+      badge:       'Pre-Order · May 2026',
+      kicker:      'Available as',
+      format:      'Audio Edition',
+      sub:         'A Culinary Journey · J. D\'Costa Andrade',
+      desc:        'The audiobook arrives in May 2026. Pre-order now and save 10%.',
+      stripeLabel: 'Pre-order Audiobook',
+      stripeDesc:  'Digital audiobook, available from May 2026. Discount already applied.',
+      discount:    '✦  10% early-bird discount already applied',
+      btnText:     'Pre-Order Now',
+      btnSub:      'Stripe Secure Checkout · SSL encrypted',
+      nlKicker:    'Get notified',
+      nlDesc:      'Leave your email and we will let you know the moment the audiobook is available.',
+      nlPlaceholder:'your@email.com',
+      nlConfirm:   'Thank you! We will be in touch.',
+      navBack:     '← Back',
+      navTitle:    'A Culinary Journey',
+      foot:        '© 2026 J. D\'Costa Andrade · All rights reserved',
+    },
+  },
+  es: {
+    ebook: {
+      badge:       'Próximamente · Mayo 2026',
+      kicker:      'Disponible como',
+      format:      'Edición Digital',
+      sub:         'Un Viaje Culinario · J. D\'Costa Andrade',
+      desc:        'El e-book en español llega en mayo de 2026. Resérvalo ahora y obtén un 10% de descuento por reserva anticipada.',
+      stripeLabel: 'Pre-reservar E-Book',
+      stripeDesc:  'Acceso digital inmediato a partir de mayo de 2026. Descuento ya aplicado.',
+      discount:    '✦  10% de descuento anticipado ya aplicado',
+      btnText:     'Reservar ahora',
+      btnSub:      'Pago seguro con Stripe · Cifrado SSL',
+      nlKicker:    'Recibir aviso',
+      nlDesc:      'Déjanos tu correo y te avisaremos en cuanto esta edición esté disponible.',
+      nlPlaceholder:'tu@correo.com',
+      nlConfirm:   '¡Gracias! Estaremos en contacto.',
+      navBack:     '← Volver',
+      navTitle:    'Un Viaje Culinario',
+      foot:        '© 2026 J. D\'Costa Andrade · Todos los derechos reservados',
+    },
+    print: {
+      badge:       'Pre-Orden · Mayo 2026',
+      kicker:      'Disponible como',
+      format:      'Edición Impresa',
+      sub:         'Un Viaje Culinario · J. D\'Costa Andrade',
+      desc:        'La edición impresa sale en mayo de 2026. Resérvala con un 10% de descuento anticipado.',
+      stripeLabel: 'Pre-reservar edición impresa',
+      stripeDesc:  'Impreso y enviado a todo el mundo desde mayo de 2026. Descuento ya aplicado.',
+      discount:    '✦  10% de descuento anticipado ya aplicado',
+      btnText:     'Reservar ahora',
+      btnSub:      'Pago seguro con Stripe · Cifrado SSL',
+      nlKicker:    'Recibir aviso',
+      nlDesc:      'Déjanos tu correo y te avisaremos en cuanto esta edición esté disponible.',
+      nlPlaceholder:'tu@correo.com',
+      nlConfirm:   '¡Gracias! Estaremos en contacto.',
+      navBack:     '← Volver',
+      navTitle:    'Un Viaje Culinario',
+      foot:        '© 2026 J. D\'Costa Andrade · Todos los derechos reservados',
+    },
+    audio: {
+      badge:       'Pre-Orden · Mayo 2026',
+      kicker:      'Disponible como',
+      format:      'Audiolibro',
+      sub:         'Un Viaje Culinario · J. D\'Costa Andrade',
+      desc:        'El audiolibro llega en mayo de 2026. Resérvalo ahora con un 10% de descuento.',
+      stripeLabel: 'Pre-reservar audiolibro',
+      stripeDesc:  'Audiolibro digital, disponible desde mayo de 2026. Descuento ya aplicado.',
+      discount:    '✦  10% de descuento anticipado ya aplicado',
+      btnText:     'Reservar ahora',
+      btnSub:      'Pago seguro con Stripe · Cifrado SSL',
+      nlKicker:    'Recibir aviso',
+      nlDesc:      'Déjanos tu correo y te avisaremos en cuanto el audiolibro esté disponible.',
+      nlPlaceholder:'tu@correo.com',
+      nlConfirm:   '¡Gracias! Estaremos en contacto.',
+      navBack:     '← Volver',
+      navTitle:    'Un Viaje Culinario',
+      foot:        '© 2026 J. D\'Costa Andrade · Todos los derechos reservados',
+    },
+  },
+  pt: {
+    ebook: {
+      badge:       'Em breve · Maio 2026',
+      kicker:      'Disponível como',
+      format:      'Edição Digital',
+      sub:         'Uma Jornada Culinária · J. D\'Costa Andrade',
+      desc:        'O e-book em português chega em maio de 2026. Faça a sua pré-encomenda agora e poupe 10%.',
+      stripeLabel: 'Pré-encomendar E-Book',
+      stripeDesc:  'Acesso digital imediato a partir de maio de 2026. Desconto já aplicado.',
+      discount:    '✦  10% de desconto antecipado já aplicado',
+      btnText:     'Pré-encomendar agora',
+      btnSub:      'Pagamento seguro Stripe · Encriptação SSL',
+      nlKicker:    'Ser notificado',
+      nlDesc:      'Deixe o seu e-mail e avisamos assim que esta edição estiver disponível.',
+      nlPlaceholder:'o.seu@email.com',
+      nlConfirm:   'Obrigado! Entraremos em contacto.',
+      navBack:     '← Voltar',
+      navTitle:    'Uma Jornada Culinária',
+      foot:        '© 2026 J. D\'Costa Andrade · Todos os direitos reservados',
+    },
+    print: {
+      badge:       'Pré-encomenda · Maio 2026',
+      kicker:      'Disponível como',
+      format:      'Edição Impressa',
+      sub:         'Uma Jornada Culinária · J. D\'Costa Andrade',
+      desc:        'A edição impressa chega em maio de 2026. Pré-encomende agora com 10% de desconto antecipado.',
+      stripeLabel: 'Pré-encomendar edição impressa',
+      stripeDesc:  'Impresso e enviado para todo o mundo a partir de maio de 2026. Desconto já aplicado.',
+      discount:    '✦  10% de desconto antecipado já aplicado',
+      btnText:     'Pré-encomendar agora',
+      btnSub:      'Pagamento seguro Stripe · Encriptação SSL',
+      nlKicker:    'Ser notificado',
+      nlDesc:      'Deixe o seu e-mail e avisamos assim que esta edição estiver disponível.',
+      nlPlaceholder:'o.seu@email.com',
+      nlConfirm:   'Obrigado! Entraremos em contacto.',
+      navBack:     '← Voltar',
+      navTitle:    'Uma Jornada Culinária',
+      foot:        '© 2026 J. D\'Costa Andrade · Todos os direitos reservados',
+    },
+    audio: {
+      badge:       'Pré-encomenda · Maio 2026',
+      kicker:      'Disponível como',
+      format:      'Edição Áudio',
+      sub:         'Uma Jornada Culinária · J. D\'Costa Andrade',
+      desc:        'O audiolivro chega em maio de 2026. Pré-encomende agora e poupe 10%.',
+      stripeLabel: 'Pré-encomendar audiolivro',
+      stripeDesc:  'Audiolivro digital, disponível a partir de maio de 2026. Desconto já aplicado.',
+      discount:    '✦  10% de desconto antecipado já aplicado',
+      btnText:     'Pré-encomendar agora',
+      btnSub:      'Pagamento seguro Stripe · Encriptação SSL',
+      nlKicker:    'Ser notificado',
+      nlDesc:      'Deixe o seu e-mail e avisamos assim que o audiolivro estiver disponível.',
+      nlPlaceholder:'o.seu@email.com',
+      nlConfirm:   'Obrigado! Entraremos em contacto.',
+      navBack:     '← Voltar',
+      navTitle:    'Uma Jornada Culinária',
+      foot:        '© 2026 J. D\'Costa Andrade · Todos os direitos reservados',
+    },
+  },
+};
+
+// SVG icons per format
+var ICONS = {
+  ebook: '<svg class="cs-icon" viewBox="0 0 48 48" fill="none"><rect x="8" y="6" width="32" height="36" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="16" x2="32" y2="16" stroke="currentColor" stroke-width="1.2"/><line x1="16" y1="22" x2="32" y2="22" stroke="currentColor" stroke-width="1.2"/><line x1="16" y1="28" x2="26" y2="28" stroke="currentColor" stroke-width="1.2"/></svg>',
+  print: '<svg class="cs-icon" viewBox="0 0 48 48" fill="none"><rect x="10" y="4" width="26" height="40" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="4" width="3" height="40" fill="currentColor" opacity="0.15"/><line x1="18" y1="14" x2="30" y2="14" stroke="currentColor" stroke-width="1"/><line x1="18" y1="20" x2="30" y2="20" stroke="currentColor" stroke-width="1"/><line x1="18" y1="26" x2="26" y2="26" stroke="currentColor" stroke-width="1"/></svg>',
+  audio: '<svg class="cs-icon" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="1.5"/><circle cx="24" cy="24" r="5" stroke="currentColor" stroke-width="1"/><line x1="24" y1="19" x2="24" y2="8" stroke="currentColor" stroke-width="1.2"/><path d="M14 30 Q10 24 14 18" stroke="currentColor" stroke-width="1.2"/><path d="M34 18 Q38 24 34 30" stroke="currentColor" stroke-width="1.2"/></svg>',
+};
+
+// ══════════════════════════════════════════════════════════════
+// INIT — read URL params and render correct content
+// ══════════════════════════════════════════════════════════════
+(function() {
+  var params  = new URLSearchParams(window.location.search);
+  var lang    = params.get('lang')   || 'de';
+  var format  = params.get('format') || 'ebook';
+
+  // fallback to 'de' if unknown
+  if (!COPY[lang])   lang   = 'de';
+  if (!COPY[lang][format]) format = 'ebook';
+
+  var c = COPY[lang][format];
+
+  // set html lang attribute
+  document.documentElement.lang = lang;
+
+  // populate all text
+  document.getElementById('cs-badge-text').textContent  = c.badge;
+  document.getElementById('cs-kicker').textContent       = c.kicker;
+  document.getElementById('cs-format-name').textContent  = c.format;
+  document.getElementById('cs-sub').textContent          = c.sub;
+  document.getElementById('cs-desc').textContent         = c.desc;
+  document.getElementById('cs-stripe-label').textContent = c.stripeLabel;
+  document.getElementById('cs-stripe-desc').textContent  = c.stripeDesc;
+  document.getElementById('cs-discount-badge').textContent = c.discount;
+  document.getElementById('cs-btn-text').textContent     = c.btnText;
+  document.getElementById('cs-btn-sub').textContent      = c.btnSub;
+  document.getElementById('nl-kicker').textContent       = c.nlKicker;
+  document.getElementById('nl-desc').textContent         = c.nlDesc;
+  document.getElementById('nl-input').placeholder        = c.nlPlaceholder;
+  document.getElementById('nav-back').textContent        = c.navBack;
+  document.getElementById('nav-title').textContent       = c.navTitle;
+  document.getElementById('cs-foot').textContent         = c.foot;
+
+  // set icon
+  document.getElementById('cs-icon-wrap').innerHTML = ICONS[format] || ICONS.ebook;
+
+  // set page title
+  var titles = { de: 'Eine Kulinarische Reise', en: 'A Culinary Journey', es: 'Un Viaje Culinario', pt: 'Uma Jornada Culinária' };
+  document.title = (titles[lang] || 'A Culinary Journey') + ' — ' + c.format;
+
+  // store for newsletter
+  window._csLang   = lang;
+  window._csFormat = format;
+  window._csConfirm = c.nlConfirm;
+
+  // ── Stripe button state ──
+  var stripeLink = STRIPE_LINKS[lang] && STRIPE_LINKS[lang][format];
+  var btn = document.getElementById('cs-stripe-btn');
+  if (stripeLink) {
+    btn.href = stripeLink;
+    btn.classList.remove('unavailable');
+    btn.removeAttribute('onclick');
+    btn.target = '_blank';
+    btn.rel    = 'noopener';
+  } else {
+    // no link yet — button shows "coming soon" state, click does nothing
+    btn.classList.add('unavailable');
+  }
+})();
+
+// ══════════════════════════════════════════════════════════════
+// STRIPE CLICK GUARD — prevents navigation when no link
+// ══════════════════════════════════════════════════════════════
+function handleStripeClick(e) {
+  var btn = document.getElementById('cs-stripe-btn');
+  if (btn.classList.contains('unavailable')) {
+    e.preventDefault();
+    // pulse the newsletter section instead
+    var nl = document.querySelector('.cs-nl-wrap');
+    nl.style.outline = '1px solid rgba(200,132,58,0.6)';
+    nl.style.transition = 'outline 0.3s';
+    setTimeout(function() { nl.style.outline = 'none'; }, 1200);
+    document.getElementById('nl-input').focus();
+  }
+  return false;
+}
+
+// ══════════════════════════════════════════════════════════════
+// NEWSLETTER
+// ══════════════════════════════════════════════════════════════
+function submitNewsletter(e) {
+  e.preventDefault();
+  var email   = document.getElementById('nl-input').value.trim();
+  var confirm = document.getElementById('nl-confirm');
+  var btn     = document.getElementById('nl-btn');
+  if (!email) return;
+
+  btn.disabled    = true;
+  btn.textContent = '…';
+
+  // ── Google Apps Script URL (same as index.html) ──
+  var SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL'; // ← same URL from index.html
+
+  fetch(SHEET_URL, {
+    method: 'POST',
+    mode:   'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email:  email,
+      lang:   window._csLang   || 'de',
+      format: window._csFormat || 'ebook',
+      source: 'coming-soon',
+      ts:     new Date().toISOString()
+    })
+  }).then(function() {
+    document.getElementById('nl-input').value = '';
+    confirm.textContent  = window._csConfirm || 'Thank you!';
+    confirm.style.display = 'block';
+    btn.disabled    = false;
+    btn.textContent = '→';
+  }).catch(function() {
+    confirm.textContent  = '⚠ Something went wrong. Please try again.';
+    confirm.style.display = 'block';
+    btn.disabled    = false;
+    btn.textContent = '→';
+  });
+}
+</script>
+
+</body>
+</html>

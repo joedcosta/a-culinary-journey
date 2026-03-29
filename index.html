@@ -785,6 +785,12 @@
       es: "preview-es.html",
       pt: "preview-pt.html",
     },
+    AUDIO_PREVIEW_URLS: {
+      de: "preview-audio-de.html",
+      en: "preview-audio-en.html",
+      es: "preview-audio-es.html",
+      pt: "preview-audio-pt.html",
+    },
     COVERS: {
       de: "images/Cover.png",
       en: "images/Cover-EN.jpg",
@@ -1049,6 +1055,7 @@
       <div class="shop-type" id="ed-audio-type">Hörbuch</div>
       <div class="shop-title" id="ed-audio-title">Audio-Ausgabe</div>
       <p class="shop-desc" id="ed-audio-desc">Erscheint Mai 2026. Jetzt vorbestellen und 10% Rabatt sichern.</p>
+      <a id="audio-preview-btn" class="shop-btn" style="background:transparent;color:var(--saffron);border:1px solid rgba(200,132,58,0.25);margin-bottom:8px;font-size:0.58rem;" href="preview-audio-de.html" target="_blank">&#9654; Hörprobe anhören</a>
       <a id="buy-btn-audio" class="shop-btn preorder" target="_blank">Vorbestellen</a>
     </div>
 
@@ -1109,7 +1116,7 @@
       </ul>
     </div>
 
-    <!-- Social -->
+     <!-- Social -->
     <div class="footer-col">
       <h5 id="foot-col-connect">Connect</h5>
       <div class="footer-social">
@@ -1267,6 +1274,7 @@ var T = {
     'buy-print-ribbon': 'Pre-Order · Mai 2026 · 10% Rabatt',
     'buy-ribbon': 'Pre-Order · Mai 2026 · 10% Rabatt',
     'buy-btn-ebook': 'Jetzt kaufen', 'buy-btn-print': 'Vorbestellen', 'buy-btn-audio': 'Vorbestellen',
+    'audio-preview-btn': '&#9654; Hörprobe anhören',
     'lang-kicker': 'Erhältlich in', 'lang-heading': 'Vier <em>Sprachen</em>',
     'lang-avail-de': 'Jetzt verfügbar',
     'lang-avail-en': 'Pre-Order · Mai 2026',
@@ -1323,6 +1331,7 @@ var T = {
     'buy-print-ribbon': 'Pre-Order · May 2026 · 10% Discount',
     'buy-ribbon': 'Pre-Order · May 2026 · 10% Discount',
     'buy-btn-ebook': 'Buy Now', 'buy-btn-print': 'Pre-Order', 'buy-btn-audio': 'Pre-Order',
+    'audio-preview-btn': '&#9654; Listen to excerpt',
     'lang-kicker': 'Available in', 'lang-heading': 'Four <em>Languages</em>',
     'lang-avail-de': 'Available now',
     'lang-avail-en': 'Pre-Order · May 2026',
@@ -1379,6 +1388,7 @@ var T = {
     'buy-print-ribbon': 'Pre-Orden · Mayo 2026 · 10% Descuento',
     'buy-ribbon': 'Pre-Orden · Mayo 2026 · 10% Descuento',
     'buy-btn-ebook': 'Comprar', 'buy-btn-print': 'Pre-Orden', 'buy-btn-audio': 'Pre-Orden',
+    'audio-preview-btn': '&#9654; Escuchar muestra',
     'lang-kicker': 'Disponible en', 'lang-heading': 'Cuatro <em>Idiomas</em>',
     'lang-avail-de': 'Disponible ahora',
     'lang-avail-en': 'Pre-Orden · Mayo 2026',
@@ -1435,6 +1445,7 @@ var T = {
     'buy-print-ribbon': 'Pré-encomenda · Maio 2026 · 10% Desconto',
     'buy-ribbon': 'Pré-encomenda · Maio 2026 · 10% Desconto',
     'buy-btn-ebook': 'Comprar', 'buy-btn-print': 'Pré-encomenda', 'buy-btn-audio': 'Pré-encomenda',
+    'audio-preview-btn': '&#9654; Ouvir amostra',
     'lang-kicker': 'Disponível em', 'lang-heading': 'Quatro <em>Idiomas</em>',
     'lang-avail-de': 'Disponível agora',
     'lang-avail-en': 'Pré-encomenda · Maio 2026',
@@ -1481,6 +1492,12 @@ function applyLangLinks(lang) {
   setLink('foot-ebook',    ebook);
   setLink('foot-print',    print);
   setLink('foot-audio',    audio);
+  // swap audio preview listen button
+  var apBtn = document.getElementById('audio-preview-btn');
+  if (apBtn) {
+    apBtn.href = CONFIG.AUDIO_PREVIEW_URLS[lang] || CONFIG.AUDIO_PREVIEW_URLS.de;
+    apBtn.target = '_blank';
+  }
 }
 
 function setLang(lang) {
@@ -1521,7 +1538,7 @@ function submitNewsletter(e) {
   btn.disabled = true;
   btn.textContent = '…';
   // Replace SHEET_URL with your Google Apps Script web app URL
-  var SHEET_URL = 'https://script.google.com/macros/s/AKfycbx6D9kugECOjWSNCRK9UIrcg6IMNUroKnbE4Vb1eE8ibcXCIsMrAoOz34aE8yoKwsug/exec';
+  var SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
   fetch(SHEET_URL, {
     method: 'POST',
     mode: 'no-cors',

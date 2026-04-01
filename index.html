@@ -810,13 +810,46 @@ function navScrollTo(id){
   document.getElementById('drawer-overlay').classList.remove('is-open');
   document.getElementById('hamburger').classList.remove('is-open');
 }
-function submitNewsletter(){
-  const input=document.getElementById('ft-nl-input');
-  const confirm=document.getElementById('ft-nl-confirm');
-  if(input.value&&input.value.includes('@')){
-    confirm.textContent=T[currentLang].footer.nlConfirm;
-    confirm.style.display='block';input.value='';
-  }
+// Newsletter - Post to Google sheets via fetch
+function submitNewsletter(e) {
+  if (e) e.preventDefault();
+
+  // Match these IDs exactly to your HTML
+  const input = document.getElementById('ft-nl-input');
+  const confirm = document.getElementById('ft-nl-confirm');
+  const btn = document.getElementById('ft-nl-btn');
+  
+  const email = input.value.trim();
+  if (!email || !email.includes('@')) return;
+
+  btn.disabled = true;
+  btn.textContent = '…';
+
+  const SHEET_URL = 'https://script.google.com/macros/library/d/1wRfr4M2oV6lcaJ3WN3Brjw19Jq-QKMaZo7vUdpePUUzD2ma3plolHMb_/3';
+
+  fetch(SHEET_URL, {
+    method: 'POST',
+    mode: 'no-cors', // Essential for Google Apps Script
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ 
+      email: email, 
+      lang: document.documentElement.lang || 'en', 
+      ts: new Date().toISOString() 
+    })
+  })
+  .then(() => {
+    input.value = '';
+    confirm.style.display = 'block';
+    confirm.textContent = 'Thank you! We will be in touch.';
+    btn.disabled = false;
+    btn.textContent = '→';
+  })
+  .catch(() => {
+    confirm.style.display = 'block';
+    confirm.textContent = 'Something went wrong. Please try again.';
+    btn.disabled = false;
+    btn.textContent = '→';
+  });
 }
 // Hamburger
 document.getElementById('hamburger').addEventListener('click',function(){
